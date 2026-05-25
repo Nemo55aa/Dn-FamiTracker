@@ -201,11 +201,18 @@ public:
 		int		iColCurrentRowEdit;
 		int		iColCurrentRowPlaying;
 
+		int		iColHeaderFont;
+		int		iColHeaderCorner;	// gradient col of header's top side
+		int		iColHeaderBackGnd;	// background col of header
+
+		CString	strFontHeader;		// Header font (e.g. Pulse1/2 Triangle)
+		int 		iHeaderFontHeight;
+
 		CString	strFont;		// // //
 		CString	strFrameFont;		// // // 050B
 		int		rowHeight;
 		int		fontPercent;	// Font height (pixels), as a percentage of row height
-
+		
 		bool	bPatternColor;
 		bool	bDisplayFlats;
 	} Appearance;
