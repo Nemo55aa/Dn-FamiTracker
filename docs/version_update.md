@@ -4,7 +4,7 @@ listing out things to do so i won't forget to do them -persune
 
 - [ ] Update changelogs:
 	- [CHANGELOG.md](Dn-FamiTracker/CHANGELOG.md), which will update [../Dn-Help/hlp/changelog_shell.htm](changelog_shell.htm) upon build
-	- see [changelog format](changelog_format.md)
+	- see [commit changelog format](commit_changelog_format.md)
 - [ ] Update copyright years:
 	- Update License years in
 		- [LICENSE.md](../LICENSE.md)
