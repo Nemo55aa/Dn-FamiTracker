@@ -27,12 +27,12 @@
 
 
 // Define this for beta builds
-#define WIP
+// #define WIP
 
 
 #define VERSION_API  0
 #define VERSION_MAJ  5
-#define VERSION_MIN  2
+#define VERSION_MIN  3
 
 #if defined(WIP)
 	#define VERSION_BLD  9

@@ -4,24 +4,20 @@ Change Log
 
 Written by D.P.C.M.
 
-Version 0.5.2.9
+Version 0.5.3
 
-Last updated: January 11, 2026
+Last updated: 2026-05-25
 
 ---
 
-## Unreleased - 2026-01-11
-
-### Important changes
-
-- ...
+## Dn0.5.3 - 2026-05-25
 
 ### Improvements
 
 - Clarify NSF driver licensing (@Gumball2415 #401)
 - Replace addition loop to the actual multiplication (@HeeminTV #400)
 	- This worked before 0CC, which had table-per-instrument limit of 16, but as it's now 64, the usage of CPU cycles in this loop became massive
-- Slighly unroll the loop for writing to $4800 (@HeeminTV #400)
+- Slighly unroll the loop for writing to `$4800` (@HeeminTV #400)
 
 ### Bug fixes
 
@@ -49,6 +45,13 @@ Last updated: January 11, 2026
 - Update NSF driver licensing (@Gumball2415 #401)
 	- Add MIT-0 license for NSF driver license
 	- Fix `LICENSE.md` links
+- Update guidelines and version documentation (@Gumball2415 #410)
+	- This removes the need to update the copyright years of all source files.
+	- Instead, update the copyright year if the author has touched the source.
+- Update guidelines and version documentation (@Gumball2415 #410)
+- Update changelog and add commit format (@Gumball2415 #405 #410)
+- Update PR change log format (@Gumball2415 #410)
+- Reorder version checklist (@Gumball2415 #410)
 
 ## Dn0.5.2 - 2025-08-18
 

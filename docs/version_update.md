@@ -5,10 +5,9 @@ listing out things to do so i won't forget to do them -persune
 - [ ] Update changelogs:
 	- [CHANGELOG.md](Dn-FamiTracker/CHANGELOG.md), which will update [../Dn-Help/hlp/changelog_shell.htm](changelog_shell.htm) upon build
 	- see [commit changelog format](commit_changelog_format.md)
-- [ ] Update copyright years:
-	- Update License years in
-		- [LICENSE.md](../LICENSE.md)
-		- [README.md](../README.md)
+- [ ] Update copyright years in:
+	- [LICENSE.md](../LICENSE.md)
+	- [README.md](../README.md)
 - [ ] Edit every file with version info:`
 	- [version.h](../version.h)
 		- [Dn-FamiTracker.rc](../Dn-FamiTracker.rc) gets its version constants from here through a build script
