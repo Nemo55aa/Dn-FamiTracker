@@ -9,6 +9,11 @@ Version 0.5.3.9
 Last updated: 2026-05-26
 
 ---
+## Unreleased - 2026-05-26
+
+- ### Important changes:
+
+	- Added color and font appearance setting for header (@Nemo55aa #413)
 
 ## Unreleased - 2026-05-26
 
