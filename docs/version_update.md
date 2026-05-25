@@ -8,6 +8,7 @@ listing out things to do so i won't forget to do them -persune
 - [ ] Update copyright years in:
 	- [LICENSE.md](../LICENSE.md)
 	- [README.md](../README.md)
+	- [Dn-FamiTracker.rc](../Dn-FamiTracker.rc)
 - [ ] Edit every file with version info:`
 	- [version.h](../version.h)
 		- [Dn-FamiTracker.rc](../Dn-FamiTracker.rc) gets its version constants from here through a build script
