@@ -535,8 +535,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,5,3,0
- PRODUCTVERSION 0,5,3,0
+ FILEVERSION 0,5,3,9
+ PRODUCTVERSION 0,5,3,9
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -553,7 +553,7 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Dn Programming Core Management"
             VALUE "FileDescription", "Dn-FamiTracker, Extension of FamiTracker"
-            VALUE "FileVersion", "0.5.3.0"
+            VALUE "FileVersion", "0.5.3.9"
             VALUE "InternalName", "Dn-FamiTracker.exe"
             VALUE "LegalCopyright", "(c) jsr 2005-2020, HertzDevil 2014-2018, Dn Programming Core Management 2020-2026. All rights reserved."
             VALUE "OriginalFilename", "Dn-FamiTracker.exe"

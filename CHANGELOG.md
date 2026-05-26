@@ -4,11 +4,35 @@ Change Log
 
 Written by D.P.C.M.
 
-Version 0.5.3
+Version 0.5.3.9
 
-Last updated: 2026-05-25
+Last updated: 2026-05-26
 
 ---
+
+## Unreleased - 2026-05-26
+
+### Breaking changes
+
+- ...
+
+### Important changes
+
+- ...
+
+### Improvements
+
+- ...
+
+### Bug fixes
+
+- ...
+
+### Internal
+
+- ...
+
+
 
 ## Dn0.5.3 - 2026-05-25
 
@@ -52,6 +76,8 @@ Last updated: 2026-05-25
 - Update changelog and add commit format (@Gumball2415 #405 #410)
 - Update PR change log format (@Gumball2415 #410)
 - Reorder version checklist (@Gumball2415 #410)
+
+
 
 ## Dn0.5.2 - 2025-08-18
 
