@@ -858,10 +858,8 @@
     <ClInclude Include="Source\SoundGen.h" />
     <ClInclude Include="Source\TrackerChannel.h" />
     <ClInclude Include="Source\APU\APU.h" />
-    <ClInclude Include="Source\APU\Channel.h" />
     <ClInclude Include="Source\APU\Mixer.h" />
     <ClInclude Include="Source\APU\Types.h" />
-    <ClInclude Include="Source\APU\SoundChip.h" />
     <ClInclude Include="Source\APU\MMC5.h" />
     <ClInclude Include="Source\APU\N163.h" />
     <ClInclude Include="Source\APU\VRC6.h" />

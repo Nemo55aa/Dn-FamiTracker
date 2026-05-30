@@ -785,9 +785,6 @@
     <ClInclude Include="Source\APU\APU.h">
       <Filter>Header Files\Sound Driver Headers\Emulation Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\APU\Channel.h">
-      <Filter>Header Files\Sound Driver Headers\Emulation Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\APU\Mixer.h">
       <Filter>Header Files\Sound Driver Headers\Emulation Headers</Filter>
     </ClInclude>
@@ -1237,9 +1234,6 @@
     </ClInclude>
     <ClInclude Include="Source\CompoundAction.h">
       <Filter>Header Files\Components Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\APU\SoundChip.h">
-      <Filter>Header Files\Sound Driver Headers\Emulation Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\RegisterState.h">
       <Filter>Header Files\Sound Driver Headers\Emulation Headers</Filter>
