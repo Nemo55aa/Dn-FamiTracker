@@ -7,7 +7,7 @@ namespace xgm
   {
     SetClock(DEFAULT_CLOCK);
     SetRate(DEFAULT_RATE);
-    option[OPT_NONLINEAR_MIXER] = false; // TODO: Use nonlinear mode 
+    option[OPT_NONLINEAR_MIXER] = true;
     option[OPT_PHASE_REFRESH] = true;
     frame_sequence_count = 0;
 

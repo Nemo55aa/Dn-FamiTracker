@@ -1,6 +1,6 @@
 /*
 ** Dn-FamiTracker - NES/Famicom sound tracker
-** Copyright (C) 2020-2025 D.P.C.M.
+** Copyright (C) 2020-2026 D.P.C.M.
 ** FamiTracker Copyright (C) 2005-2020 Jonathan Liss
 ** 0CC-FamiTracker Copyright (C) 2014-2018 HertzDevil
 **
@@ -211,7 +211,7 @@ void CMixer::RecomputeEmuMixState()
 	auto &chipVRC7 = *m_APU->m_pVRC7;
 	auto &chipFDS = *m_APU->m_pFDS;
 	auto &chipN163 = *m_APU->m_pN163;
-	auto& chipMMC5 = *m_APU->m_pMMC5;
+	auto &chipMMC5 = *m_APU->m_pMMC5;
 
 	bool UseSurveyMixing = m_MixerConfig.UseSurveyMix;
 

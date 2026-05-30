@@ -1,6 +1,6 @@
 /*
 ** Dn-FamiTracker - NES/Famicom sound tracker
-** Copyright (C) 2020-2025 D.P.C.M.
+** Copyright (C) 2020-2026 D.P.C.M.
 ** FamiTracker Copyright (C) 2005-2020 Jonathan Liss
 ** 0CC-FamiTracker Copyright (C) 2014-2018 HertzDevil
 **
@@ -26,8 +26,6 @@
 
 #include "APU/nsfplay/xgm/devices/Sound/nes_mmc5.h"
 #include <memory>
-
-class CSquare;		// // //
 
 class CMMC5 : public CSoundChip2 {
 public:

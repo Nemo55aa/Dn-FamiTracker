@@ -76,7 +76,7 @@ void CMMC5::Process(uint32_t Time, Blip_Buffer& Output)
 
 		int32_t out[2];
 		m_MMC5.Render(out);
-		m_SynthMMC5.update(m_iTime + now, out[0] >> 6, &blip_buf); // TODO: Properly utilize the nonlinear mixer.
+		m_SynthMMC5.update(m_iTime + now, out[0], &blip_buf);
 
 		m_ChannelLevels[0].update(m_MMC5.out[0]);
 		m_ChannelLevels[1].update(m_MMC5.out[1]);
@@ -107,5 +107,5 @@ int CMMC5::GetChannelLevelRange(int Channel) const
 }
 
 void CMMC5::UpdateMixLevel(double v, bool UseSurveyMix) {
-	m_SynthMMC5.volume(v * (UseSurveyMix ? 1.0f : 1.18421f), UseSurveyMix ? 15 + 15 + 255 : 130);
+	m_SynthMMC5.volume(UseSurveyMix ? v : v * 1.18421f, UseSurveyMix ? 8191 : 10000);
 }
