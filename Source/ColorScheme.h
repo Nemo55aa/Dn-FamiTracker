@@ -93,13 +93,13 @@ const COLOR_SCHEME DEFAULT_COLOR_SCHEME = {
 	0x00A02030,			// // // Current row
 	0x00302080,			// // // Current row (edit mode)
 	0x00400050,			// // // Current row (playing)
-	0x00FFFFFF,			// Header Background color
-	0x00FFFFFF,			// Header corner color
-	0x00000000,			// Header text color
+	0x00FFFFFF,			// !! !! Channel header background color
+	0x00FFFFFF,			// !! !! Channel header corner color
+	0x00000000,			// !! !! Channel header text color
 	_T("Verdana"),		// Font
 	12,					// Font size
-	_T("Tahoma"),		// Channel header font
-	11					// Channel header font size
+	_T("Tahoma"),		// !! !! Channel header font
+	11					// !! !! Channel header font size
 };
 
 // Monochrome
@@ -119,13 +119,13 @@ const COLOR_SCHEME MONOCHROME_COLOR_SCHEME = {
 	0x00A02030,			// // // Current row
 	0x00302080,			// // // Current row (edit mode)
 	0x00400050,			// // // Current row (playing)
-	0x00FFFFFF,			// Header Background color
+	0x00FFFFFF,			// Header background color
 	0x00FFFFFF,			// Header corner color
 	0x00000000,			// Header text color
 	_T("Fixedsys"),		// Font
 	12,					// Font size
-	_T("Tahoma"),		// Channel header font
-	11					// Channel header font size
+	_T("Tahoma"),		// !! !! Channel header font
+	11					// !! !! Channel header font size
 };
 
 // Renoise
@@ -145,13 +145,13 @@ const COLOR_SCHEME RENOISE_COLOR_SCHEME = {
 	0x00A02030,			// // // Current row
 	0x00302080,			// // // Current row (edit mode)
 	0x00400050,			// // // Current row (playing)
-	0x00FFFFFF,			// Header Background color
-	0x00FFFFFF,			// Header corner color
-	0x00000000,			// Header text color
+	0x00FFFFFF,			// !! !! Channel header background color
+	0x00FFFFFF,			// !! !! Channel header corner color
+	0x00000000,			// !! !! Channel header text color
 	_T("Fixedsys"),		// Font
 	12,					// Font size
-	_T("Tahoma"),		// Channel header font
-	11					// Channel header font size
+	_T("Tahoma"),		// !! !! Channel header font
+	11					// !! !! Channel header font size
 };
 
 // White
@@ -171,13 +171,13 @@ const COLOR_SCHEME WHITE_COLOR_SCHEME = {
 	0x00A02030,			// // // Current row
 	0x00302080,			// // // Current row (edit mode)
 	0x00400050,			// // // Current row (playing)
-	0x00FFFFFF,			// Header Background color
-	0x00FFFFFF,			// Header corner color
-	0x00000000,			// Header text color
+	0x00FFFFFF,			// !! !! Channel header background color
+	0x00FFFFFF,			// !! !! Channel header corner color
+	0x00000000,			// veader text color
 	_T("Courier"),		// Font
 	12,					// Font size
-	_T("Tahoma"),		// Channel header font
-	11					// Channel header font size
+	_T("Tahoma"),		// !! !! Channel header font
+	11					// !! !! Channel header font size
 };
 
 // // // Saturday
@@ -197,13 +197,13 @@ const COLOR_SCHEME SATURDAY_COLOR_SCHEME = {
 	0x00D01030,			// // // Current row
 	0x000030C0,			// // // Current row (edit mode)
 	0x00500070,			// // // Current row (playing)
-	0x00FFFFFF,			// Header Background color
-	0x00FFFFFF,			// Header corner color
-	0x00000000,			// Header text color
+	0x00FFFFFF,			// !! !! Channel header background color
+	0x00FFFFFF,			// !! !! Channel header corner color
+	0x00000000,			// !! !! Channel header text color
 	_T("Courier"),		// Font
 	11,					// Font size
-	_T("Tahoma"),		// Channel header font
-	11					// Channel header font size
+	_T("Tahoma"),		// !! !! Channel header font
+	11					// !! !! Channel header font size
 };
 
 

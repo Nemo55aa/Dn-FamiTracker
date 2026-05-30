@@ -725,8 +725,8 @@ void CConfigAppearance::ExportSettings(const char *Path) const		// // // 050B
 		file << "Font" << SETTING_SEPARATOR << m_strFont << std::endl;
 		file << "Font size" << SETTING_SEPARATOR << m_rowHeight << std::endl;
 		file << "Font percent" << SETTING_SEPARATOR << this->fontPercent << std::endl;
-		file << "HeaderFont" << SETTING_SEPARATOR << m_strHeaderFont << std::endl;
-		file << "HeaderFont size" << SETTING_SEPARATOR << m_headerFontHeight << std::endl;
+		file << "Channel header font" << SETTING_SEPARATOR << m_strHeaderFont << std::endl;
+		file << "Channel header font size" << SETTING_SEPARATOR << m_headerFontHeight << std::endl;
 		}
 }
 
@@ -808,9 +808,9 @@ void CConfigAppearance::ImportSettings(const char *Path)		// // // 050B
 				this->fontPercent = *x;
 		} else if (is_match(key, "Font")) {
 			m_strFont = value.data();
-		} else if (is_match(key, "HeaderFont")) {
+		} else if (is_match(key, "Channel header font")) {
 			m_strHeaderFont = value.data();
-		} else if (is_match(key, "HeaderFont size"))
+		} else if (is_match(key, "Channel header font size"))
 			if (auto x = conv::to_uint(value))
 				m_headerFontHeight = *x;
 
