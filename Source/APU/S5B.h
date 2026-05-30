@@ -22,7 +22,6 @@
 #pragma once
 
 #include "SoundChip2.h"
-#include "Channel.h"
 
 #include "APU/digital-sound-antiques/emu2149.h"
 

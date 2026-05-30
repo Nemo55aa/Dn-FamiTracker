@@ -32,7 +32,6 @@
 #include "N163.h"
 #include "VRC7.h"
 #include "S5B.h"
-#include "SoundChip.h"
 #include "SoundChip2.h"
 #include "../RegisterState.h"		// // //
 #include "../SpeedDlg.h"
