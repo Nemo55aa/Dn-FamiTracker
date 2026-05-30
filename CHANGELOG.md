@@ -6,16 +6,11 @@ Written by D.P.C.M.
 
 Version 0.5.3.9
 
-Last updated: 2026-05-26
+Last updated: 2026-05-30
 
 ---
-## Unreleased - 2026-05-26
 
-- ### Important changes:
-
-	- Added color and font appearance setting for header (@Nemo55aa #413)
-
-## Unreleased - 2026-05-26
+## Unreleased - 2026-05-30
 
 ### Breaking changes
 
@@ -27,7 +22,7 @@ Last updated: 2026-05-26
 
 ### Improvements
 
-- ...
+- Add color and font appearance setting for channel header (@Nemo55aa #413 #409)
 
 ### Bug fixes
 
