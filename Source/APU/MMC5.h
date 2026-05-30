@@ -21,31 +21,39 @@
 
 #pragma once
 
-#include "SoundChip.h"
-#include "Channel.h"
+#include "SoundChip2.h"
+#include "ChannelLevelState.h"
+
+#include "APU/nsfplay/xgm/devices/Sound/nes_mmc5.h"
+#include <memory>
 
 class CSquare;		// // //
 
-class CMMC5 : public CSoundChip {
+class CMMC5 : public CSoundChip2 {
 public:
-	CMMC5(CMixer *pMixer);
-	virtual ~CMMC5();
+	CMMC5();
 
-	void Reset();
-	void Write(uint16_t Address, uint8_t Value);
-	uint8_t Read(uint16_t Address, bool &Mapped);
-	void EndFrame();
-	void Process(uint32_t Time);
-	double GetFreq(int Channel) const override;		// // //
+	void	Reset() override;
+	void	UpdateFilter(blip_eq_t eq) override;
+	void	SetClockRate(uint32_t Rate) override;
+	void	Write(uint16_t Address, uint8_t Value) override;
+	uint8_t Read(uint16_t Address, bool &Mapped) override;
+	void	Process(uint32_t Time, Blip_Buffer& Output) override;
+	void	EndFrame(Blip_Buffer& Output, gsl::span<int16_t> TempBuffer) override;
+	double	GetFreq(int Channel) const override;
+	int		GetChannelLevel(int Channel) override;
+	int		GetChannelLevelRange(int Channel) const override;
+	void	UpdateMixLevel(double v, bool UseSurveyMix);
 
-	void LengthCounterUpdate();
-	void EnvelopeUpdate();
-	void ClockSequence();		// // //
+private:
+	std::unique_ptr<uint8_t[]> m_pEXRAM;
 
-private:	
-	CSquare	*m_pSquare1;
-	CSquare	*m_pSquare2;
-	uint8_t	*m_pEXRAM;
-	uint8_t	m_iMulLow;
-	uint8_t	m_iMulHigh;
+	xgm::NES_MMC5 m_MMC5;
+
+	Blip_Buffer m_BlipMMC5;
+	Blip_Synth<blip_good_quality> m_SynthMMC5;
+
+	ChannelLevelState<uint8_t> m_ChannelLevels[2];
+
+	uint32_t m_iTime = 0;
 };

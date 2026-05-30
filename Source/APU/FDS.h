@@ -23,7 +23,6 @@
 
 #include "SoundChip2.h"
 #include "ChannelLevelState.h"
-#include "Blip_Buffer/Blip_Buffer.h"
 #include "APU/mesen/FdsAudio.h"
 #include "FamiTracker.h"
 #include "Settings.h"
@@ -33,17 +32,16 @@ class CMixer;
 class CFDS : public CSoundChip2 {
 public:
 	CFDS();
-	virtual ~CFDS();
 	void	Reset() override;
-	void UpdateFilter(blip_eq_t eq) override;
-	void SetClockRate(uint32_t Rate) override;
+	void	UpdateFilter(blip_eq_t eq) override;
+	void	SetClockRate(uint32_t Rate) override;
 	void	Write(uint16_t Address, uint8_t Value) override;
 	uint8_t	Read(uint16_t Address, bool &Mapped) override;
 	void	Process(uint32_t Time, Blip_Buffer& Output) override;
 	void	EndFrame(Blip_Buffer& Output, gsl::span<int16_t> TempBuffer) override;
 	double	GetFreq(int Channel) const override;		// // //
-	int GetChannelLevel(int Channel) override;
-	int GetChannelLevelRange(int Channel) const override;
+	int		GetChannelLevel(int Channel) override;
+	int		GetChannelLevelRange(int Channel) const override;
 
 	int CFDS::GetModCounter() const;
 
@@ -51,9 +49,8 @@ public:
 	void UpdateMixLevel(double v, bool UseSurveyMix = false);
 
 private:
-	void RecomputeFdsFilter();
+	void	RecomputeFdsFilter();
 	double	GetModFreq() const;
-	double	GetOutPrevFreq() const;
 	double	GetOutputFreq() const;
 
 private:

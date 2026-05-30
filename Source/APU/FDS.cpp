@@ -25,7 +25,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>		// !! !! M_PI
 
-// FDS interface, actual FDS emulation is in FDSSound.cpp
+// FDS interface, actual FDS emulation is in APU/mesen/FdsAudio.h
 
 CFDS::CFDS()
 {
@@ -33,10 +33,6 @@ CFDS::CFDS()
 
 	// Reset() is called by CAPU::SetExternalSound(), but let's call it ourself.
 	Reset();
-}
-
-CFDS::~CFDS()
-{
 }
 
 void CFDS::Reset()

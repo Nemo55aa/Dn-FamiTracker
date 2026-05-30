@@ -170,7 +170,6 @@ public:
 
 private:
 	void MixVRC6(int Value, int Time);
-	void MixMMC5(int Value, int Time);
 	void MixS5B(int Value, int Time);
 
 	void StoreChannelLevel(int Channel, int Value);
@@ -187,7 +186,6 @@ private:
 	// Should never be null during playback. CAPU creates all expansion chips,
 	// even if chips are not active in current module.
 	Blip_Synth<blip_good_quality> SynthVRC6;
-	Blip_Synth<blip_good_quality> SynthMMC5;
 	Blip_Synth<blip_good_quality> SynthS5B;		// // // 050B
 
 	/// Only used by CMixer::ClearBuffer(), which clears the global Blip_Buffer
@@ -201,7 +199,6 @@ private:
 	/// which also calls CSoundChip2::Reset() on each sound chip.
 	#define FOREACH_SYNTH(X, SEP) \
 		X(SynthVRC6) SEP \
-		X(SynthMMC5) SEP \
 		X(SynthS5B)
 
 	// Blip buffer object

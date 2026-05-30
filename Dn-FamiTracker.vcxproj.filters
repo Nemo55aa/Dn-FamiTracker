@@ -205,17 +205,11 @@
     <Filter Include="Header Files\Export Headers\NSF Driver Headers">
       <UniqueIdentifier>{8a13d9a5-57df-4a74-98ed-32b22988f021}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Sound Driver\Emulation\Internal Channels">
-      <UniqueIdentifier>{3931a8ff-bd19-453d-bf1c-ffd5ac81e4bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Sound Driver\Emulation\Sound Chips">
       <UniqueIdentifier>{054c1c46-130d-4482-95ae-ef122acf37ae}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Sound Driver\Emulation\Sound Chips\External">
       <UniqueIdentifier>{4b2cd041-94e9-49f0-92f5-111e73c05385}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Sound Driver Headers\Emulation Headers\Internal Channels Headers">
-      <UniqueIdentifier>{601b20e6-4fbc-4bbf-88e9-d2189b54a8a4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Sound Driver Headers\Emulation Headers\Sound Chip Headers">
       <UniqueIdentifier>{9ee503ff-184b-4f1f-9262-28f317a15e44}</UniqueIdentifier>
@@ -455,9 +449,6 @@
     </ClCompile>
     <ClCompile Include="Source\APU\Mixer.cpp">
       <Filter>Source Files\Sound Driver\Emulation</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\APU\Square.cpp">
-      <Filter>Source Files\Sound Driver\Emulation\Internal Channels</Filter>
     </ClCompile>
     <ClCompile Include="Source\APU\MMC5.cpp">
       <Filter>Source Files\Sound Driver\Emulation\Sound Chips</Filter>
@@ -750,6 +741,9 @@
     <ClCompile Include="Source\JsonExporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\APU\nsfplay\xgm\devices\Sound\nes_mmc5.cpp">
+      <Filter>Source Files\Sound Driver\Emulation\Sound Chips\External\nsfplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Exception.h">
@@ -790,9 +784,6 @@
     </ClInclude>
     <ClInclude Include="Source\APU\Types.h">
       <Filter>Header Files\Sound Driver Headers\Emulation Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\APU\Square.h">
-      <Filter>Header Files\Sound Driver Headers\Emulation Headers\Internal Channels Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\APU\MMC5.h">
       <Filter>Header Files\Sound Driver Headers\Emulation Headers\Sound Chip Headers</Filter>
@@ -1229,9 +1220,6 @@
     <ClInclude Include="Source\APU\2A03.h">
       <Filter>Header Files\Sound Driver Headers\Emulation Headers\Sound Chip Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\APU\2A03Chan.h">
-      <Filter>Header Files\Sound Driver Headers\Emulation Headers\Internal Channels Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PatternNote.h">
       <Filter>Header Files\Document Data Type Headers</Filter>
     </ClInclude>
@@ -1498,6 +1486,9 @@
     </ClInclude>
     <ClInclude Include="Source\JsonExporter.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\APU\nsfplay\xgm\devices\Sound\nes_mmc5.h">
+      <Filter>Header Files\Sound Driver Headers\Emulation Headers\Sound Chip Headers\External\nsfplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
