@@ -519,6 +519,7 @@
     <Manifest />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\APU\digital-sound-antiques\emu2149.c" />
     <ClCompile Include="Source\APU\digital-sound-antiques\emu2413.c" />
     <ClCompile Include="Source\APU\nsfplay\xgm\devices\Sound\nes_mmc5.cpp" />
     <ClCompile Include="Source\APU\nsfplay\xgm\devices\Sound\nes_vrc6.cpp" />
@@ -532,7 +533,6 @@
     <ClCompile Include="Source\HistoryFileDlg.cpp" />
     <ClCompile Include="Source\APU\2A03.cpp" />
     <ClCompile Include="Source\APU\S5B.cpp" />
-    <ClCompile Include="Source\APU\SoundChip.cpp" />
     <ClCompile Include="Source\Bookmark.cpp" />
     <ClCompile Include="Source\BookmarkCollection.cpp" />
     <ClCompile Include="Source\BookmarkDlg.cpp" />
@@ -696,6 +696,7 @@
       <Outputs>Dn-help\hlp\HTMLDefines.h;%(Outputs)</Outputs>
       <BuildInParallel>true</BuildInParallel>
     </CustomBuild>
+    <ClInclude Include="Source\APU\digital-sound-antiques\emu2149.h" />
     <ClInclude Include="Source\APU\nsfplay\xgm\devices\Sound\nes_mmc5.h" />
     <ClInclude Include="Source\APU\nsfplay\xgm\devices\Sound\nes_vrc6.h" />
     <ClInclude Include="Source\ConfigEmulation.h" />

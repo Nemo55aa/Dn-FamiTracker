@@ -1,6 +1,6 @@
 /*
 ** Dn-FamiTracker - NES/Famicom sound tracker
-** Copyright (C) 2020-2025 D.P.C.M.
+** Copyright (C) 2020-2026 D.P.C.M.
 ** FamiTracker Copyright (C) 2005-2020 Jonathan Liss
 ** 0CC-FamiTracker Copyright (C) 2014-2018 HertzDevil
 **
@@ -21,71 +21,38 @@
 
 #pragma once
 
-#include "SoundChip.h"
+#include "SoundChip2.h"
 #include "Channel.h"
 
-// // // 050B
+#include "APU/digital-sound-antiques/emu2149.h"
 
-class CS5BChannel : public CChannel
+class CS5B : public CSoundChip2
 {
 public:
-	friend class CS5B;
-
-	CS5BChannel(CMixer *pMixer, uint8_t ID);
+	CS5B();
 	
-	void Process(uint32_t Time);
-	void Reset();
-
-	uint32_t GetTime();
-	void Output(uint32_t Noise, uint32_t Envelope);
-
-	double GetFrequency() const override;
-
-private:
-	uint8_t m_iVolume;
-	uint32_t m_iPeriod;
-	uint32_t m_iPeriodClock;
-
-	bool m_bSquareHigh;
-	bool m_bSquareDisable;
-	bool m_bNoiseDisable;
-};
-
-class CS5B : public CSoundChip
-{
-public:
-	CS5B(CMixer *pMixer);
-	virtual ~CS5B();
-	
-	void	Reset();
-	void	Process(uint32_t Time);
-	void	EndFrame();
-
-	void	Write(uint16_t Address, uint8_t Value);
-	uint8_t	Read(uint16_t Address, bool &Mapped);
+	void	Reset() override;
+	void	UpdateFilter(blip_eq_t eq) override;
+	void	SetClockRate(uint32_t Rate) override;
+	void	Write(uint16_t Address, uint8_t Value) override;
+	uint8_t	Read(uint16_t Address, bool& Mapped) override;
 	void	Log(uint16_t Address, uint8_t Value);		// // //
-
-	double	GetFreq(int Channel) const override;		// // //
+	void	Process(uint32_t Time, Blip_Buffer& Output) override;
+	void	EndFrame(Blip_Buffer& Output, gsl::span<int16_t> TempBuffer) override;
+	double	GetFreq(int Channel) const override;
+	int		GetChannelLevel(int Channel) override;
+	int		GetChannelLevelRange(int Channel) const override;
+	void	UpdateMixLevel(double v, bool UseSurveyMix);
 
 private:
-	void	WriteReg(uint8_t Port, uint8_t Value);
-	void	RunEnvelope(uint32_t Time);
-	void	RunNoise(uint32_t Time);
+	PSG *m_S5B;
 
-private:
-	CS5BChannel *m_pChannel[3];
+	Blip_Buffer	m_BlipS5B;
+	Blip_Synth<blip_good_quality> m_SynthS5B;
+
+	ChannelLevelState<uint8_t> m_ChannelLevels[3];
+
+	uint32_t m_iTime = 0;
 
 	uint8_t m_cPort;
-
-	int m_iCounter;
-
-	uint32_t m_iNoisePeriod;
-	uint32_t m_iNoiseClock;
-	uint32_t m_iNoiseState;
-
-	uint32_t m_iEnvelopePeriod;
-	uint32_t m_iEnvelopeClock;
-	char m_iEnvelopeLevel;
-	char m_iEnvelopeShape;
-	bool m_bEnvelopeHold;
 };

@@ -142,7 +142,6 @@ private:
 	/// Never read, except for code hidden behind #ifdef LOGGING.
 	uint8_t		m_iExternalSoundChips;
 
-	std::vector<CSoundChip*> m_SoundChips;
 	std::vector<CSoundChip2*> m_SoundChips2;
 
 	uint32_t	m_iSampleRate;						// // //
@@ -164,7 +163,6 @@ private:
 	uint8_t		m_iSequencerCount;					// // // Step count for sequencer
 
 	float		m_fLevelVRC7;
-	// // // 050B removed
 
 #ifdef LOGGING
 	CFile		  *m_pLog;

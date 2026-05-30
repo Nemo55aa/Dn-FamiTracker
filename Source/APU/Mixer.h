@@ -169,8 +169,6 @@ public:
 	void	SetMeterDecayRate(int Rate);		// // // 050B
 
 private:
-	void MixS5B(int Value, int Time);
-
 	void StoreChannelLevel(int Channel, int Value);
 	void ClearChannelLevels();
 
@@ -179,24 +177,6 @@ private:
 private:
 	// Pointer to parent/owning CAPU object.
 	CAPU * m_APU;
-
-	// Blip buffer synths
-
-	// Should never be null during playback. CAPU creates all expansion chips,
-	// even if chips are not active in current module.
-	Blip_Synth<blip_good_quality> SynthS5B;		// // // 050B
-
-	/// Only used by CMixer::ClearBuffer(), which clears the global Blip_Buffer
-	/// and all Blip_Synth owned by CMixer.
-	///
-	/// What about CSoundChip2 which owns its own Blip_Synth?
-	/// I've decided that CMixer should not be responsible for clearing those Blip_Synth,
-	/// but rather CSoundChip2::Reset() should do so.
-	///
-	/// This works because CMixer::ClearBuffer() is only called by CAPU::Reset(),
-	/// which also calls CSoundChip2::Reset() on each sound chip.
-	#define FOREACH_SYNTH(X, SEP) \
-		X(SynthS5B)
 
 	// Blip buffer object
 	Blip_Buffer	BlipBuffer;

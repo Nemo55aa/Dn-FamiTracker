@@ -238,6 +238,12 @@
     <Filter Include="Header Files\Sound Driver Headers\Emulation Headers\Sound Chip Headers\External\mesen">
       <UniqueIdentifier>{f2739585-ae45-42fa-bcd6-0366cbc323c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Sound Driver\Emulation\Sound Chips\External\digital-sound-antiques">
+      <UniqueIdentifier>{f6c5cb00-d3b0-40fe-ba36-209bb0bf9946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sound Driver Headers\Emulation Headers\Sound Chip Headers\External\digital-sound-antiques">
+      <UniqueIdentifier>{25163f8b-fd27-4438-a81a-98c1c6e3137f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Exception.cpp">
@@ -666,9 +672,6 @@
     <ClCompile Include="Source\RegisterState.cpp">
       <Filter>Source Files\Sound Driver\Emulation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\APU\SoundChip.cpp">
-      <Filter>Source Files\Sound Driver\Emulation</Filter>
-    </ClCompile>
     <ClCompile Include="Source\NoteQueue.cpp">
       <Filter>Source Files\Sound Driver</Filter>
     </ClCompile>
@@ -746,6 +749,9 @@
     </ClCompile>
     <ClCompile Include="Source\APU\nsfplay\xgm\devices\Sound\nes_vrc6.cpp">
       <Filter>Source Files\Sound Driver\Emulation\Sound Chips\External\nsfplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\APU\digital-sound-antiques\emu2149.c">
+      <Filter>Source Files\Sound Driver\Emulation\Sound Chips\External\digital-sound-antiques</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1495,6 +1501,9 @@
     </ClInclude>
     <ClInclude Include="Source\APU\nsfplay\xgm\devices\Sound\nes_vrc6.h">
       <Filter>Header Files\Sound Driver Headers\Emulation Headers\Sound Chip Headers\External\nsfplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\APU\digital-sound-antiques\emu2149.h">
+      <Filter>Header Files\Sound Driver Headers\Emulation Headers\Sound Chip Headers\External\digital-sound-antiques</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
