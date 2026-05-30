@@ -160,16 +160,15 @@ CAPU::CAPU(IAudioCallback *pCallback) :		// // //
 	m_pMixer(new CMixer(this)),
 	m_p2A03(std::make_unique<C2A03>()),
 	m_pMMC5(std::make_unique<CMMC5>()),
+	m_pVRC6(std::make_unique<CVRC6>()),
 	m_pFDS(std::make_unique<CFDS>()),
 	m_pN163(std::make_unique<CN163>()),
 	m_pVRC7(std::make_unique<CVRC7>()),
+	m_pS5B(std::make_unique<CS5B>(m_pMixer)),
 	m_iExternalSoundChips(0),
 	m_iCyclesToRun(0),
 	m_iSampleRate(44100)		// // //
 {
-	m_pVRC6 = new CVRC6(m_pMixer);
-	m_pS5B  = new CS5B(m_pMixer);
-
 	m_fLevelVRC7 = 1.0f;
 
 #ifdef LOGGING
@@ -180,13 +179,8 @@ CAPU::CAPU(IAudioCallback *pCallback) :		// // //
 
 CAPU::~CAPU()
 {
-	SAFE_RELEASE(m_pVRC6);
-	SAFE_RELEASE(m_pS5B);
-
 	SAFE_RELEASE(m_pMixer);
-
 	SAFE_RELEASE(m_pSoundBuffer);
-
 #ifdef LOGGING
 	m_pLog->Close();
 	delete m_pLog;
@@ -297,7 +291,7 @@ void CAPU::SetExternalSound(uint8_t Chip)
 
 	m_SoundChips2.push_back(m_p2A03.get());		// // //
 	if (Chip & SNDCHIP_VRC6)
-		m_SoundChips.push_back(m_pVRC6);
+		m_SoundChips2.push_back(m_pVRC6.get());
 	if (Chip & SNDCHIP_VRC7)
 		m_SoundChips2.push_back(m_pVRC7.get());
 	if (Chip & SNDCHIP_FDS)
@@ -307,7 +301,7 @@ void CAPU::SetExternalSound(uint8_t Chip)
 	if (Chip & SNDCHIP_N163)
 		m_SoundChips2.push_back(m_pN163.get());
 	if (Chip & SNDCHIP_S5B)
-		m_SoundChips.push_back(m_pS5B);
+		m_SoundChips.push_back(m_pS5B.get());
 
 	// Set (unused) bitfield of external sound chips enabled.
 	m_iExternalSoundChips = Chip;

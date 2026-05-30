@@ -71,6 +71,7 @@
 #include "APU.h"
 #include "2A03.h"
 #include "MMC5.h"
+#include "VRC6.h"
 #include "FDS.h"
 #include "N163.h"
 #include "utils/variadic_minmax.h"
@@ -203,15 +204,15 @@ void CMixer::RecomputeEmuMixState()
 		chip->UpdateFilter(eq);
 	}
 
-	SynthVRC6.treble_eq(eq);
 	SynthS5B.treble_eq(eq);
 
 	// Volume levels
 	auto &chip2A03 = *m_APU->m_p2A03;
+	auto &chipMMC5 = *m_APU->m_pMMC5;
+	auto &chipVRC6 = *m_APU->m_pVRC6;
 	auto &chipVRC7 = *m_APU->m_pVRC7;
 	auto &chipFDS = *m_APU->m_pFDS;
 	auto &chipN163 = *m_APU->m_pN163;
-	auto &chipMMC5 = *m_APU->m_pMMC5;
 
 	bool UseSurveyMixing = m_MixerConfig.UseSurveyMix;
 
@@ -223,20 +224,19 @@ void CMixer::RecomputeEmuMixState()
 	// should be supplied by the CSoundChip2 subclass rather than CMixer.
 	chip2A03.UpdateMixingAPU1(Volume * m_fLevelAPU1, UseSurveyMixing);
 	chip2A03.UpdateMixingAPU2(Volume * m_fLevelAPU2, UseSurveyMixing);
+	chipMMC5.UpdateMixLevel(Volume * m_fLevelMMC5, UseSurveyMixing);
+	chipVRC6.UpdateMixLevel(Volume * m_fLevelVRC6, UseSurveyMixing);
 	chipFDS.UpdateMixLevel(Volume * m_fLevelFDS, UseSurveyMixing);
 	chipN163.UpdateMixLevel(Volume * m_fLevelN163, UseSurveyMixing);
-	chipMMC5.UpdateMixLevel(Volume * m_fLevelMMC5, UseSurveyMixing);
 
 	if (UseSurveyMixing) {
 		chipVRC7.UpdateMixLevel(Volume * m_fLevelVRC7, UseSurveyMixing);
-		SynthVRC6.volume(Volume * m_fLevelVRC6, 15 + 15 + 31);	// P1 + P2 + Saw, linear
 		SynthS5B.volume(Volume * m_fLevelS5B, 255 + 255 + 255);	// 5B1 + 5B2 + 5B3, linear
 	}
 	else {
 		// match legacy expansion audio mixing
 		// VRC7 level does not decrease as you enable expansion chips
 		chipVRC7.UpdateMixLevel(m_MixerConfig.OverallVol * m_fLevelVRC7);
-		SynthVRC6.volume(Volume * 3.98333f * m_fLevelVRC6, 500);
 		SynthS5B.volume(Volume * m_fLevelS5B, 1200);  // Not checked
 	}
 
@@ -356,6 +356,11 @@ void CMixer::FinishBuffer(int t)
 	StoreChannelLevel(CHANID_MMC5_SQUARE1, get_channel_level(chipMMC5, 0));
 	StoreChannelLevel(CHANID_MMC5_SQUARE2, get_channel_level(chipMMC5, 1));
 
+	auto& chipVRC6 = *m_APU->m_pVRC6;
+	StoreChannelLevel(CHANID_VRC6_PULSE1, get_channel_level(chipVRC6, 0));
+	StoreChannelLevel(CHANID_VRC6_PULSE2, get_channel_level(chipVRC6, 1));
+	StoreChannelLevel(CHANID_VRC6_SAWTOOTH, get_channel_level(chipVRC6, 2));
+
 	auto& chipFDS = *m_APU->m_pFDS;
 	StoreChannelLevel(CHANID_FDS, get_channel_level(chipFDS, 0));
 
@@ -371,11 +376,6 @@ void CMixer::FinishBuffer(int t)
 //
 // Mixing
 //
-
-void CMixer::MixVRC6(int Value, int Time)
-{
-	SynthVRC6.offset(Time, Value, &BlipBuffer);
-}
 
 void CMixer::MixS5B(int Value, int Time)
 {
@@ -397,9 +397,6 @@ void CMixer::AddValue(int ChanID, int Chip, int Value, int AbsValue, int FrameCy
 			// 2A03 nonlinear mixing bypasses CMixer now, and talks directly to BlipBuffer
 			// (obtained by CMixer::GetBuffer()).
 			break;
-		case SNDCHIP_VRC6:
-			MixVRC6(Value, FrameCycles);
-			break;
 		case SNDCHIP_S5B:		// // // 050B
 			MixS5B(Value, FrameCycles);
 			break;
@@ -419,10 +416,6 @@ int32_t CMixer::GetChanOutput(uint8_t Chan) const
 void CMixer::StoreChannelLevel(int Channel, int Value)
 {
 	int AbsVol = abs(Value);
-
-	// Adjust channel levels for some channels
-	if (Channel == CHANID_VRC6_SAWTOOTH)
-		AbsVol = (AbsVol * 3) / 4;
 
 	if (Channel >= CHANID_S5B_CH1 && Channel <= CHANID_S5B_CH3) {
 		AbsVol = (int)(logf((float)AbsVol) * 2.8f);

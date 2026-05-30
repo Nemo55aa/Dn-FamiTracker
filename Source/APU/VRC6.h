@@ -1,6 +1,6 @@
 /*
 ** Dn-FamiTracker - NES/Famicom sound tracker
-** Copyright (C) 2020-2025 D.P.C.M.
+** Copyright (C) 2020-2026 D.P.C.M.
 ** FamiTracker Copyright (C) 2005-2020 Jonathan Liss
 ** 0CC-FamiTracker Copyright (C) 2014-2018 HertzDevil
 **
@@ -21,60 +21,34 @@
 
 #pragma once
 
-#include "SoundChip.h"
-#include "Channel.h"
+#include "SoundChip2.h"
+#include "ChannelLevelState.h"
 
-class CVRC6_Pulse : public CChannel {
+#include "APU/nsfplay/xgm/devices/Sound/nes_vrc6.h"
+
+class CVRC6 : public CSoundChip2 {
 public:
-	CVRC6_Pulse(CMixer *pMixer, int ID);
-	void Reset();
-	void Write(uint16_t Address, uint8_t Value);
-	void Process(int Time);
-	double GetFrequency() const;		// // //
+	CVRC6();
+
+	void	Reset() override;
+	void	UpdateFilter(blip_eq_t eq) override;
+	void	SetClockRate(uint32_t Rate) override;
+	void	Write(uint16_t Address, uint8_t Value) override;
+	uint8_t Read(uint16_t Address, bool& Mapped) override;
+	void	Process(uint32_t Time, Blip_Buffer& Output) override;
+	void	EndFrame(Blip_Buffer& Output, gsl::span<int16_t> TempBuffer) override;
+	double	GetFreq(int Channel) const override;
+	int		GetChannelLevel(int Channel) override;
+	int		GetChannelLevelRange(int Channel) const override;
+	void	UpdateMixLevel(double v, bool UseSurveyMix);
 
 private:
-	uint8_t	m_iDutyCycle, 
-			m_iVolume, 
-			m_iGate, 
-			m_iEnabled;
-	uint32_t	m_iPeriod;
-	uint8_t	m_iPeriodLow, 
-			m_iPeriodHigh;
-	int32_t	m_iCounter;
-	uint8_t	m_iDutyCycleCounter;
-};
+	xgm::NES_VRC6 m_VRC6;
 
-class CVRC6_Sawtooth : public CChannel {
-public:
-	CVRC6_Sawtooth(CMixer *pMixer, int ID);
-	void Reset();
-	void Write(uint16_t Address, uint8_t Value);
-	void Process(int Time);
-	double GetFrequency() const;		// // //
+	Blip_Buffer m_BlipVRC6;
+	Blip_Synth<blip_good_quality> m_SynthVRC6;
 
-private:
-	uint8_t	m_iPhaseAccumulator, 
-			m_iPhaseInput, 
-			m_iEnabled, 
-			m_iResetReg;
-	uint32_t	m_iPeriod;
-	uint8_t	m_iPeriodLow, 
-			m_iPeriodHigh;
-	int32_t	m_iCounter;
-};
+	ChannelLevelState<uint8_t> m_ChannelLevels[3];
 
-class CVRC6 : public CSoundChip {
-public:
-	CVRC6(CMixer *pMixer);
-	virtual ~CVRC6();
-	void Reset();
-	void Write(uint16_t Address, uint8_t Value);
-	uint8_t Read(uint16_t Address, bool &Mapped);
-	void EndFrame();
-	void Process(uint32_t Time);
-	double GetFreq(int Channel) const override;		// // //
-
-private:
-	CVRC6_Pulse	*m_pPulse1, *m_pPulse2;
-	CVRC6_Sawtooth *m_pSawtooth;
+	uint32_t m_iTime = 0;
 };

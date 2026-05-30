@@ -744,6 +744,9 @@
     <ClCompile Include="Source\APU\nsfplay\xgm\devices\Sound\nes_mmc5.cpp">
       <Filter>Source Files\Sound Driver\Emulation\Sound Chips\External\nsfplay</Filter>
     </ClCompile>
+    <ClCompile Include="Source\APU\nsfplay\xgm\devices\Sound\nes_vrc6.cpp">
+      <Filter>Source Files\Sound Driver\Emulation\Sound Chips\External\nsfplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Exception.h">
@@ -1488,6 +1491,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\APU\nsfplay\xgm\devices\Sound\nes_mmc5.h">
+      <Filter>Header Files\Sound Driver Headers\Emulation Headers\Sound Chip Headers\External\nsfplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\APU\nsfplay\xgm\devices\Sound\nes_vrc6.h">
       <Filter>Header Files\Sound Driver Headers\Emulation Headers\Sound Chip Headers\External\nsfplay</Filter>
     </ClInclude>
   </ItemGroup>
