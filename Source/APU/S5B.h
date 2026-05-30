@@ -21,11 +21,11 @@
 
 #pragma once
 
-#include "SoundChip2.h"
+#include "SoundChip.h"
 
 #include "APU/digital-sound-antiques/emu2149.h"
 
-class CS5B : public CSoundChip2
+class CS5B : public CSoundChip
 {
 public:
 	CS5B();

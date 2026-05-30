@@ -21,13 +21,13 @@
 
 #pragma once
 
-#include "SoundChip2.h"
+#include "SoundChip.h"
 #include "ChannelLevelState.h"
 
 #include "APU/nsfplay/xgm/devices/Sound/nes_mmc5.h"
 #include <memory>
 
-class CMMC5 : public CSoundChip2 {
+class CMMC5 : public CSoundChip {
 public:
 	CMMC5();
 

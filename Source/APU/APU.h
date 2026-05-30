@@ -44,7 +44,7 @@ class CN163;
 class CS5B;
 
 class CSoundChip;		// // //
-class CSoundChip2;
+class CSoundChip;
 class CRegisterState;		// // //
 
 #ifdef LOGGING
@@ -142,7 +142,7 @@ private:
 	/// Never read, except for code hidden behind #ifdef LOGGING.
 	uint8_t		m_iExternalSoundChips;
 
-	std::vector<CSoundChip2*> m_SoundChips2;
+	std::vector<CSoundChip*> m_SoundChips2;
 
 	uint32_t	m_iSampleRate;						// // //
 	uint32_t	m_iFrameCycleCount;

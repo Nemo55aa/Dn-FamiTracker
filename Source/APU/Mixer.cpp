@@ -221,7 +221,7 @@ void CMixer::RecomputeEmuMixState()
 	// Update mixing
 
 	// Maybe the range argument, as well as the constant factor in the volume,
-	// should be supplied by the CSoundChip2 subclass rather than CMixer.
+	// should be supplied by the CSoundChip subclass rather than CMixer.
 	chip2A03.UpdateMixingAPU1(Volume * m_fLevelAPU1, UseSurveyMixing);
 	chip2A03.UpdateMixingAPU2(Volume * m_fLevelAPU2, UseSurveyMixing);
 	chipMMC5.UpdateMixLevel(Volume * m_fLevelMMC5, UseSurveyMixing);
@@ -296,7 +296,7 @@ int CMixer::SamplesAvail() const
 	return (int)BlipBuffer.samples_avail();
 }
 
-static int get_channel_level(CSoundChip2& chip, int channel) {
+static int get_channel_level(CSoundChip& chip, int channel) {
 	int max = chip.GetChannelLevelRange(channel);
 	int level = chip.GetChannelLevel(channel);
 

@@ -21,12 +21,12 @@
 
 #pragma once
 
-#include "SoundChip2.h"
+#include "SoundChip.h"
 #include "ChannelLevelState.h"
 
 #include "digital-sound-antiques/emu2413.h"
 
-class CVRC7 : public CSoundChip2 {
+class CVRC7 : public CSoundChip {
 public:
 	CVRC7();
 	virtual ~CVRC7();

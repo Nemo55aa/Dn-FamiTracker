@@ -21,12 +21,12 @@
 
 #pragma once
 
-#include "SoundChip2.h"
+#include "SoundChip.h"
 #include "ChannelLevelState.h"
 
 #include "APU/nsfplay/xgm/devices/Sound/nes_vrc6.h"
 
-class CVRC6 : public CSoundChip2 {
+class CVRC6 : public CSoundChip {
 public:
 	CVRC6();
 

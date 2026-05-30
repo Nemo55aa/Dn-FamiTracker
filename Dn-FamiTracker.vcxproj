@@ -528,7 +528,7 @@
     <ClCompile Include="Source\APU\FDS.cpp" />
     <ClCompile Include="Source\APU\nsfplay\xgm\devices\Sound\nes_apu.cpp" />
     <ClCompile Include="Source\APU\nsfplay\xgm\devices\Sound\nes_dmc.cpp" />
-    <ClCompile Include="Source\APU\SoundChip2.cpp" />
+    <ClCompile Include="Source\APU\SoundChip.cpp" />
     <ClCompile Include="Source\NoNotifyEdit.cpp" />
     <ClCompile Include="Source\HistoryFileDlg.cpp" />
     <ClCompile Include="Source\APU\2A03.cpp" />
@@ -715,7 +715,7 @@
     <ClInclude Include="Source\APU\nsfplay\xgm\devices\Sound\nes_dmc.h" />
     <ClInclude Include="Source\APU\nsfplay\xgm\devices\Sound\nsfplay_math.h" />
     <ClInclude Include="Source\APU\nsfplay\xgm\xtypes.h" />
-    <ClInclude Include="Source\APU\SoundChip2.h" />
+    <ClInclude Include="Source\APU\SoundChip.h" />
     <ClInclude Include="Source\NoNotifyEdit.h" />
     <ClInclude Include="Source\HistoryFileDlg.h" />
     <ClInclude Include="Source\APU\2A03.h" />

@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "SoundChip2.h"
+#include "SoundChip.h"
 #include "ChannelLevelState.h"
 
 #include "APU/nsfplay/xgm/devices/Sound/nes_apu.h"
@@ -77,7 +77,7 @@ private:
 	uint16_t m_iMemSize;
 };
 
-class C2A03 : public CSoundChip2
+class C2A03 : public CSoundChip
 {
 public:
 	C2A03();

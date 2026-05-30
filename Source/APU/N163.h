@@ -21,14 +21,14 @@
 
 #pragma once
 
-#include "SoundChip2.h"
+#include "SoundChip.h"
 #include "ChannelLevelState.h"
 #include "Blip_Buffer/Blip_Buffer.h"
 #include "APU/mesen/Namco163Audio.h"
 #include "FamiTracker.h"
 #include "Settings.h"
 
-class CN163 : public CSoundChip2 {
+class CN163 : public CSoundChip {
 public:
 	CN163();
 	virtual	~CN163();

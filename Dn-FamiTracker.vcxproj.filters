@@ -720,7 +720,7 @@
     <ClCompile Include="Source\VersionCheckerDlg.cpp">
       <Filter>Source Files\Dialog Boxes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\APU\SoundChip2.cpp">
+    <ClCompile Include="Source\APU\SoundChip.cpp">
       <Filter>Source Files\Sound Driver\Emulation</Filter>
     </ClCompile>
     <ClCompile Include="Source\APU\nsfplay\xgm\devices\Sound\nes_apu.cpp">
@@ -1439,7 +1439,7 @@
     <ClInclude Include="Source\APU\nsfplay\xgm\xtypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\APU\SoundChip2.h">
+    <ClInclude Include="Source\APU\SoundChip.h">
       <Filter>Header Files\Sound Driver Headers\Emulation Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\utils\variadic_minmax.h">

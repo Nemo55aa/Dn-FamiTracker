@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "SoundChip2.h"
+#include "SoundChip.h"
 #include "ChannelLevelState.h"
 #include "APU/mesen/FdsAudio.h"
 #include "FamiTracker.h"
@@ -29,7 +29,7 @@
 
 class CMixer;
 
-class CFDS : public CSoundChip2 {
+class CFDS : public CSoundChip {
 public:
 	CFDS();
 	void	Reset() override;

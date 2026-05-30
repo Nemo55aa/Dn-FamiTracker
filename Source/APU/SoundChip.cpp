@@ -19,27 +19,27 @@
 */
 
 #include "../stdafx.h"
-#include "SoundChip2.h"
+#include "SoundChip.h"
 #include "../RegisterState.h"
 
-CSoundChip2::CSoundChip2() :
+CSoundChip::CSoundChip() :
 	m_pRegisterLogger(std::make_unique<CRegisterLogger>())
 {
 }
 
-double CSoundChip2::GetFreq(int Channel) const		// // //
+double CSoundChip::GetFreq(int Channel) const		// // //
 {
 	return 0.0;
 }
 
-void CSoundChip2::Log(uint16_t Address, uint8_t Value)		// // //
+void CSoundChip::Log(uint16_t Address, uint8_t Value)		// // //
 {
 	// default logger operation
 	if (m_pRegisterLogger->SetPort(Address))
 		m_pRegisterLogger->Write(Value);
 }
 
-CRegisterLogger* CSoundChip2::GetRegisterLogger() const		// // //
+CRegisterLogger* CSoundChip::GetRegisterLogger() const		// // //
 {
 	return m_pRegisterLogger.get();
 }

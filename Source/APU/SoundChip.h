@@ -30,16 +30,16 @@
 class CRegisterLogger;		// // //
 class Blip_Buffer;
 
-class CSoundChip2 {
+class CSoundChip {
 public:
-	CSoundChip2();		// // //
-	virtual ~CSoundChip2() = default;
+	CSoundChip();		// // //
+	virtual ~CSoundChip() = default;
 
 	virtual void	Reset() = 0;
 	virtual void UpdateFilter(blip_eq_t eq) = 0;
 
 	/// The empty default implementation is sufficient
-	/// unless your CSoundChip2 subclass owns its own Blip_Buffer (not just Blip_Synth).
+	/// unless your CSoundChip subclass owns its own Blip_Buffer (not just Blip_Synth).
 	///
 	/// tbh the proliferation of mutable state with setters is evil,
 	/// I'd much rather set clock rate as a constructor parameter
@@ -53,7 +53,7 @@ public:
 	virtual void	Process(uint32_t Time, Blip_Buffer& Output) = 0;
 
 	/// End an audio frame/tick.
-	/// Each subclass of CSoundChip2 can choose to write audio to Output
+	/// Each subclass of CSoundChip can choose to write audio to Output
 	/// on every call to Process(), or on the final call to EndFrame().
 	///
 	/// - Output is where audio will be written to.
