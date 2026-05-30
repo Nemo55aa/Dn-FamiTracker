@@ -1,6 +1,6 @@
 /*
 ** Dn-FamiTracker - NES/Famicom sound tracker
-** Copyright (C) 2020-2025 D.P.C.M.
+** Copyright (C) 2020-2026 D.P.C.M.
 ** FamiTracker Copyright (C) 2005-2020 Jonathan Liss
 ** 0CC-FamiTracker Copyright (C) 2014-2018 HertzDevil
 **
@@ -70,10 +70,10 @@ struct COLOR_SCHEME {
 	const COLORREF	HEADER_CORNER;
 	const COLORREF	HEADER_FONT_COL;
 	const TCHAR		*FONT_FACE;
-	const TCHAR 	*HEADER_FONT;
 	const int		FONT_SIZE;
+	const TCHAR 	*HEADER_FONT;
 	const int		HEADER_FONT_SIZE;
-	const int FONT_PERCENT = 100;
+	const int		FONT_PERCENT = 100;
 };
 
 // Default
@@ -97,9 +97,9 @@ const COLOR_SCHEME DEFAULT_COLOR_SCHEME = {
 	0x00FFFFFF,			// Header corner color
 	0x00000000,			// Header text color
 	_T("Verdana"),		// Font
-	_T("Verdana"),		// Header Font
 	12,					// Font size
-	12					// Header Font size
+	_T("Tahoma"),		// Channel header font
+	11					// Channel header font size
 };
 
 // Monochrome
@@ -123,9 +123,9 @@ const COLOR_SCHEME MONOCHROME_COLOR_SCHEME = {
 	0x00FFFFFF,			// Header corner color
 	0x00000000,			// Header text color
 	_T("Fixedsys"),		// Font
-	_T("Fixedsys"),		// Header Font
 	12,					// Font size
-	12					// Header Font size
+	_T("Tahoma"),		// Channel header font
+	11					// Channel header font size
 };
 
 // Renoise
@@ -149,9 +149,9 @@ const COLOR_SCHEME RENOISE_COLOR_SCHEME = {
 	0x00FFFFFF,			// Header corner color
 	0x00000000,			// Header text color
 	_T("Fixedsys"),		// Font
-	_T("Fixedsys"),		// Header Font
 	12,					// Font size
-	12					// Header Font size
+	_T("Tahoma"),		// Channel header font
+	11					// Channel header font size
 };
 
 // White
@@ -175,9 +175,9 @@ const COLOR_SCHEME WHITE_COLOR_SCHEME = {
 	0x00FFFFFF,			// Header corner color
 	0x00000000,			// Header text color
 	_T("Courier"),		// Font
-	_T("Courier"),		// Header Font
 	12,					// Font size
-	12					// Header Font size
+	_T("Tahoma"),		// Channel header font
+	11					// Channel header font size
 };
 
 // // // Saturday
@@ -201,9 +201,9 @@ const COLOR_SCHEME SATURDAY_COLOR_SCHEME = {
 	0x00FFFFFF,			// Header corner color
 	0x00000000,			// Header text color
 	_T("Courier"),		// Font
-	_T("Courier"),		// Header Font
 	11,					// Font size
-	11					// Header Font size
+	_T("Tahoma"),		// Channel header font
+	11					// Channel header font size
 };
 
 
