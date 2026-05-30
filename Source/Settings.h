@@ -1,6 +1,6 @@
 /*
 ** Dn-FamiTracker - NES/Famicom sound tracker
-** Copyright (C) 2020-2025 D.P.C.M.
+** Copyright (C) 2020-2026 D.P.C.M.
 ** FamiTracker Copyright (C) 2005-2020 Jonathan Liss
 ** 0CC-FamiTracker Copyright (C) 2014-2018 HertzDevil
 **
@@ -201,9 +201,9 @@ public:
 		int		iColCurrentRowEdit;
 		int		iColCurrentRowPlaying;
 
-		int		iColHeaderFont;
-		int		iColHeaderCorner;	// gradient col of header's top side
-		int		iColHeaderBackGnd;	// background col of header
+		int		iColHeaderFont;		// !! !! Channel header font color
+		int		iColHeaderCorner;	// !! !! Top gradient color of channel header
+		int		iColHeaderBackGnd;	// !! !! Background color of header
 
 		CString	strFontHeader;		// Header font (e.g. Pulse1/2 Triangle)
 		int 		iHeaderFontHeight;
@@ -212,7 +212,7 @@ public:
 		CString	strFrameFont;		// // // 050B
 		int		rowHeight;
 		int		fontPercent;	// Font height (pixels), as a percentage of row height
-		
+
 		bool	bPatternColor;
 		bool	bDisplayFlats;
 	} Appearance;

@@ -1,6 +1,6 @@
 /*
 ** Dn-FamiTracker - NES/Famicom sound tracker
-** Copyright (C) 2020-2025 D.P.C.M.
+** Copyright (C) 2020-2026 D.P.C.M.
 ** FamiTracker Copyright (C) 2005-2020 Jonathan Liss
 ** 0CC-FamiTracker Copyright (C) 2014-2018 HertzDevil
 **
@@ -181,10 +181,10 @@ void CSettings::SetupSettings()
 	SETTING_INT("Appearance", "Current row (edit mode)", DEFAULT_COLOR_SCHEME.ROW_EDIT, &Appearance.iColCurrentRowEdit);
 	SETTING_INT("Appearance", "Current row (playing)", DEFAULT_COLOR_SCHEME.ROW_PLAYING, &Appearance.iColCurrentRowPlaying);
 	
-	SETTING_INT("Appearance", "Header Background", 	DEFAULT_COLOR_SCHEME.HEADER_BACKGND, 	&Appearance.iColHeaderBackGnd);
-	SETTING_INT("Appearance", "Header Corner", 		DEFAULT_COLOR_SCHEME.HEADER_CORNER, 	&Appearance.iColHeaderCorner);
-	SETTING_INT("Appearance", "Header text", 		DEFAULT_COLOR_SCHEME.HEADER_FONT_COL, 	&Appearance.iColHeaderFont);
-	
+	SETTING_INT("Appearance", "Channel header background",	DEFAULT_COLOR_SCHEME.HEADER_BACKGND,	&Appearance.iColHeaderBackGnd);
+	SETTING_INT("Appearance", "Channel header corner",		DEFAULT_COLOR_SCHEME.HEADER_CORNER, 	&Appearance.iColHeaderCorner);
+	SETTING_INT("Appearance", "Channel header text",		DEFAULT_COLOR_SCHEME.HEADER_FONT_COL,	&Appearance.iColHeaderFont);
+
 	SETTING_STRING("Appearance", "Pattern font", FONT_FACE, &Appearance.strFont)
 		->UpdateDefault("General", "Pattern font");
 	SETTING_INT("Appearance", "Pattern font size", FONT_SIZE, &Appearance.rowHeight)
@@ -202,7 +202,7 @@ void CSettings::SetupSettings()
 		->UpdateDefault("General", "Header font");
 	SETTING_INT("Appearance", "HeaderFont size", FONT_SIZE, &Appearance.iHeaderFontHeight)
 		->UpdateDefault("General", "HeaderFont size");
-	
+
 	// Window position
 	SETTING_INT("Window position", "Left", 100, &WindowPos.iLeft);
 	SETTING_INT("Window position", "Top", 100, &WindowPos.iTop);

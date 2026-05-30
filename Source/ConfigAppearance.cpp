@@ -53,9 +53,9 @@ const TCHAR *CConfigAppearance::COLOR_ITEMS[] = {
 	_T("Current row (normal mode)"),		// // //
 	_T("Current row (edit mode)"),
 	_T("Current row (playing)"),
-	_T("Header Background"),
-	_T("Header Corner"),
-	_T("Header text")
+	_T("Channel header background"),
+	_T("Channel header corner"),
+	_T("Channel header text")
 };
 
 const char CConfigAppearance::SETTING_SEPARATOR[] = " : ";		// // // 050B
