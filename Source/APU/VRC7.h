@@ -52,6 +52,9 @@ public:
 
 	void UpdatePatchSet(int PatchSelection, bool UseExternalOPLLChip, uint8_t *PatchSet);
 
+	uint8_t GetChannelCount() const override { return 6; }; // TODO: Dynamically calculate this?
+	chan_id_t GetFirstChannelID() const override { return CHANID_VRC7_CH1; };
+
 protected:
 	static const float  AMPLIFY;
 	static const uint32_t OPLL_CLOCK;

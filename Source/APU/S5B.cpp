@@ -28,13 +28,15 @@
 CS5B::CS5B() :
 	m_cPort(0)
 {
-	m_S5B = PSG_new(m_BlipS5B.sample_rate(), m_BlipS5B.sample_rate());
+	// Set up the emulation core with parameters
+	m_S5B = PSG_new(m_BlipS5B.sample_rate(), m_BlipS5B.sample_rate() / 8);
 
 	PSG_setQuality(m_S5B, 0);
 	PSG_setClock(m_S5B, m_BlipS5B.sample_rate());
 	PSG_setRate(m_S5B, m_BlipS5B.sample_rate());
 	PSG_setClockDivider(m_S5B, 1);
 
+	// 5B internal registers
 	m_pRegisterLogger->AddRegisterRange(0x00, 0x0F);
 }
 
@@ -62,24 +64,24 @@ void CS5B::SetClockRate(uint32_t Rate)
 
 void CS5B::Write(uint16_t Address, uint8_t Value)
 {
+	// S5B has an I/O system for setting its internal registers.
+	// The currently set port is m_cPort.
 	switch (Address) {
-	case 0xC000:
-		m_cPort = Value & 0x0F;
-		break;
-	case 0xE000:
-		PSG_writeReg(m_S5B, m_cPort, Value);
-		break;
+	case 0xC000: m_cPort = Value & 0x0F; break;
+	case 0xE000: PSG_writeReg(m_S5B, m_cPort, Value); break;
 	}
 }
 
 uint8_t CS5B::Read(uint16_t Address, bool& Mapped)
 {
+	// The internal registers are inaccessible to reads.
 	Mapped = false;
-	return 0U;
+	return 0;
 }
 
 void CS5B::Log(uint16_t Address, uint8_t Value)		// // //
 {
+	// Despite the write-only registers, inform the register logger of their values anyway.
 	switch (Address) {
 	case 0xC000: m_pRegisterLogger->SetPort(Value); break;
 	case 0xE000: m_pRegisterLogger->Write(Value); break;
@@ -91,8 +93,11 @@ void CS5B::EndFrame(Blip_Buffer& Output, gsl::span<int16_t>)
 	m_iTime = 0;
 }
 
-uint8_t output_to_level(int output) {
+// This function takes the 5B channel output from 0-255 and recovers the volume level for the meter
+uint8_t CS5B::output_to_level(int output) const
+{
 	switch (output) {
+//  output --> meter level
 	case 0x00: return 0x00;
 	case 0x01: return 0x01;
 	case 0x02: return 0x02;
@@ -122,13 +127,15 @@ uint8_t output_to_level(int output) {
 	case 0xD6: return 0x0E;
 	case 0xFF: return 0x0F;
 	}
-	return 0x08;
+	return 0x00;
 }
 
+// Clock the emulation core and output to the buffer.
 void CS5B::Process(uint32_t Time, Blip_Buffer& Output)
 {
 	uint32_t now = 0;
-
+	
+	// TODO: calculate number of clock cycles until the level changes
 	auto get_output = [this](uint32_t dclocks, uint32_t now, Blip_Buffer& blip_buf) {
 		int32_t out = PSG_calc(m_S5B);
 		m_SynthS5B.update(m_iTime + now, out, &blip_buf);
@@ -150,6 +157,7 @@ void CS5B::Process(uint32_t Time, Blip_Buffer& Output)
 
 double CS5B::GetFreq(int Channel) const		// // //
 {
+	// Borrowed from old core's calculations.
 	switch (Channel) {
 	case 0: case 1: case 2:
 		if (m_S5B->tmask[Channel] || m_S5B->freq[Channel] == 0) return 0.;
@@ -173,6 +181,7 @@ int CS5B::GetChannelLevelRange(int Channel) const
 	return 0x0F;
 }
 
-void CS5B::UpdateMixLevel(double v, bool UseSurveyMix) {
+void CS5B::UpdateMixLevel(double v, bool UseSurveyMix)
+{
 	m_SynthS5B.volume(v, UseSurveyMix ? 255 + 255 + 255 : 1200);
 }

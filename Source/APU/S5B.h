@@ -22,20 +22,19 @@
 #pragma once
 
 #include "SoundChip.h"
-
 #include "APU/digital-sound-antiques/emu2149.h"
 
-class CS5B : public CSoundChip
-{
+class CS5B : public CSoundChip {
 public:
 	CS5B();
 	
+	// standard instance methods
 	void	Reset() override;
 	void	UpdateFilter(blip_eq_t eq) override;
 	void	SetClockRate(uint32_t Rate) override;
 	void	Write(uint16_t Address, uint8_t Value) override;
 	uint8_t	Read(uint16_t Address, bool& Mapped) override;
-	void	Log(uint16_t Address, uint8_t Value);		// // //
+	void	Log(uint16_t Address, uint8_t Value);
 	void	Process(uint32_t Time, Blip_Buffer& Output) override;
 	void	EndFrame(Blip_Buffer& Output, gsl::span<int16_t> TempBuffer) override;
 	double	GetFreq(int Channel) const override;
@@ -43,15 +42,25 @@ public:
 	int		GetChannelLevelRange(int Channel) const override;
 	void	UpdateMixLevel(double v, bool UseSurveyMix);
 
+	// // // Report some basic information about the chip
+	uint8_t GetChannelCount() const override { return 3; };						// // // TODO: Dynamically calculate this?
+	chan_id_t GetFirstChannelID() const override { return CHANID_S5B_CH1; };	// // //
+
 private:
+	// This function takes the 5B channel output from 0-255 and recovers the volume level for the meter
+	uint8_t output_to_level(int output) const;
+
+	// The S5B emulation core (currently emu2149)
 	PSG *m_S5B;
 
+	// The audio buffer
 	Blip_Buffer	m_BlipS5B;
 	Blip_Synth<blip_good_quality> m_SynthS5B;
 
-	ChannelLevelState<uint8_t> m_ChannelLevels[3];
-
 	uint32_t m_iTime = 0;
+
+	// Three channels for S5B.
+	ChannelLevelState<uint8_t> m_ChannelLevels[3];
 
 	uint8_t m_cPort;
 };

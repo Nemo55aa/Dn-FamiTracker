@@ -24,9 +24,9 @@
 
 // MMC5 external sound
 
-CMMC5::CMMC5() :
-	m_pEXRAM(std::make_unique<uint8_t[]>(0x400))
+CMMC5::CMMC5()
 {
+	// MMC5 mapped registers
 	m_pRegisterLogger->AddRegisterRange(0x5000, 0x5007);
 	m_pRegisterLogger->AddRegisterRange(0x5015, 0x5015);
 }
@@ -52,11 +52,13 @@ void CMMC5::SetClockRate(uint32_t Rate)
 
 void CMMC5::Write(uint16_t Address, uint8_t Value)
 {
+	// MMC5 audio registers are exposed for writing
 	m_MMC5.Write(Address, Value);
 }
 
 uint8_t CMMC5::Read(uint16_t Address, bool &Mapped)
 {
+	// MMC5 audio registers are available for reading
 	xgm::UINT32 value;
 	Mapped = m_MMC5.Read(Address, value);
 	return value;
@@ -67,6 +69,7 @@ void CMMC5::EndFrame(Blip_Buffer& Output, gsl::span<int16_t> TempBuffer)
 	m_iTime = 0;
 }
 
+// Clock the emulation core and output to the buffer.
 void CMMC5::Process(uint32_t Time, Blip_Buffer& Output)
 {
 	uint32_t now = 0;
@@ -106,6 +109,7 @@ int CMMC5::GetChannelLevelRange(int Channel) const
 	return 15;
 }
 
-void CMMC5::UpdateMixLevel(double v, bool UseSurveyMix) {
+void CMMC5::UpdateMixLevel(double v, bool UseSurveyMix)
+{
 	m_SynthMMC5.volume(UseSurveyMix ? v : v * 1.18421f, UseSurveyMix ? 8191 : 10000);
 }

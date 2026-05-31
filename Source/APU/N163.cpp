@@ -41,10 +41,6 @@ CN163::CN163()
 	Reset();
 }
 
-CN163::~CN163()
-{
-}
-
 void CN163::Reset()
 {
 	m_N163.Reset();

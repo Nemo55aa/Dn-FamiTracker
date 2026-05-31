@@ -25,7 +25,6 @@
 #include "ChannelLevelState.h"
 
 #include "APU/nsfplay/xgm/devices/Sound/nes_mmc5.h"
-#include <memory>
 
 class CMMC5 : public CSoundChip {
 public:
@@ -43,9 +42,10 @@ public:
 	int		GetChannelLevelRange(int Channel) const override;
 	void	UpdateMixLevel(double v, bool UseSurveyMix);
 
-private:
-	std::unique_ptr<uint8_t[]> m_pEXRAM;
+	uint8_t GetChannelCount() const override { return 2; }; // TODO: Dynamically calculate this?
+	chan_id_t GetFirstChannelID() const override { return CHANID_MMC5_SQUARE1; };
 
+private:
 	xgm::NES_MMC5 m_MMC5;
 
 	Blip_Buffer m_BlipMMC5;

@@ -197,7 +197,7 @@ void CAPU::Process()
 		uint32_t Time = m_iCyclesToRun;
 		Time = std::min(Time, m_iSequencerNext - m_iSequencerClock);		// // //
 		Time = std::min(Time, m_iFrameClock);
-		for (auto Chip : m_SoundChips2)
+		for (auto Chip : m_SoundChips)
 			Chip->Process(Time, m_pMixer->GetBuffer());
 
 		m_iFrameCycles	  += Time;
@@ -227,7 +227,7 @@ void CAPU::EndFrame()
 {
 	// The APU will always output audio in 32 bit signed format
 	
-	for (auto Chip : m_SoundChips2)
+	for (auto Chip : m_SoundChips)
 		Chip->EndFrame(m_pMixer->GetBuffer(), gsl::span(m_pSoundBuffer, m_iSoundBufferSize << 1));
 
 	m_pMixer->FinishBuffer(m_iFrameCycles);
@@ -237,7 +237,7 @@ void CAPU::EndFrame()
 	m_iFrameClock /*+*/= m_iFrameCycleCount;
 	m_iFrameCycles = 0;
 
-	for (auto& r : m_SoundChips2)
+	for (auto& r : m_SoundChips)
 		r->GetRegisterLogger()->Step();
 
 #ifdef LOGGING
@@ -260,7 +260,7 @@ void CAPU::Reset()
 	
 	m_pMixer->ClearBuffer();
 
-	for (auto Chip : m_SoundChips2) {
+	for (auto Chip : m_SoundChips) {
 		Chip->GetRegisterLogger()->Reset();
 		Chip->Reset();
 	}
@@ -273,27 +273,27 @@ void CAPU::Reset()
 void CAPU::SetExternalSound(uint8_t Chip)
 {
 	// Initialize list of active sound chips.
-	// Do this first because m_SoundChips2 is used by CMixer::ExternalSound() -> CMixer::UpdateMixing().
-	m_SoundChips2.clear();
+	// Do this first because m_SoundChips is used by CMixer::ExternalSound() -> CMixer::UpdateMixing().
+	m_SoundChips.clear();
 
-	m_SoundChips2.push_back(m_p2A03.get());		// // //
+	m_SoundChips.push_back(m_p2A03.get());		// // //
 	if (Chip & SNDCHIP_VRC6)
-		m_SoundChips2.push_back(m_pVRC6.get());
+		m_SoundChips.push_back(m_pVRC6.get());
 	if (Chip & SNDCHIP_VRC7)
-		m_SoundChips2.push_back(m_pVRC7.get());
+		m_SoundChips.push_back(m_pVRC7.get());
 	if (Chip & SNDCHIP_FDS)
-		m_SoundChips2.push_back(m_pFDS.get());
+		m_SoundChips.push_back(m_pFDS.get());
 	if (Chip & SNDCHIP_MMC5)
-		m_SoundChips2.push_back(m_pMMC5.get());
+		m_SoundChips.push_back(m_pMMC5.get());
 	if (Chip & SNDCHIP_N163)
-		m_SoundChips2.push_back(m_pN163.get());
+		m_SoundChips.push_back(m_pN163.get());
 	if (Chip & SNDCHIP_S5B)
-		m_SoundChips2.push_back(m_pS5B.get());
+		m_SoundChips.push_back(m_pS5B.get());
 
 	// Set (unused) bitfield of external sound chips enabled.
 	m_iExternalSoundChips = Chip;
 
-	// Reinitialize mixer with list of external sound chips (as well as m_SoundChips2).
+	// Reinitialize mixer with list of external sound chips (as well as m_SoundChips).
 	m_pMixer->ExternalSound(Chip);
 
 	// CAPU::ChangeMachineRate -> CMixer::SetClockRate is called before CAPU::SetExternalSound,
@@ -371,7 +371,7 @@ void CAPU::Write(uint16_t Address, uint8_t Value)
 
 	Process();
 	
-	for (auto Chip : m_SoundChips2)
+	for (auto Chip : m_SoundChips)
 		Chip->Write(Address, Value);
 
 	LogWrite(Address, Value);
@@ -387,7 +387,7 @@ uint8_t CAPU::Read(uint16_t Address)
 
 	Process();
 
-	for (auto Chip : m_SoundChips2)
+	for (auto Chip : m_SoundChips)
 		if (!Mapped)
 			Value = Chip->Read(Address, Mapped);
 
@@ -484,7 +484,7 @@ int CAPU::GetMeterDecayRate() const		// // // 050B
 
 void CAPU::LogWrite(uint16_t Address, uint8_t Value)
 {
-	for (auto& r : m_SoundChips2)
+	for (auto& r : m_SoundChips)
 		r->Log(Address, Value);
 }
 

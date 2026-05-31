@@ -30,6 +30,7 @@ class CVRC6 : public CSoundChip {
 public:
 	CVRC6();
 
+	// standard instance methods
 	void	Reset() override;
 	void	UpdateFilter(blip_eq_t eq) override;
 	void	SetClockRate(uint32_t Rate) override;
@@ -42,13 +43,21 @@ public:
 	int		GetChannelLevelRange(int Channel) const override;
 	void	UpdateMixLevel(double v, bool UseSurveyMix);
 
+	// // // Report some basic information about the chip
+	uint8_t GetChannelCount() const override { return 3; };							// // // TODO: Dynamically calculate this?
+	chan_id_t GetFirstChannelID() const override { return CHANID_VRC6_PULSE1; };	// // //
+
 private:
+	// The VRC6 emulation core (currently nsfplay)
 	xgm::NES_VRC6 m_VRC6;
 
+	// The audio buffer
 	Blip_Buffer m_BlipVRC6;
 	Blip_Synth<blip_good_quality> m_SynthVRC6;
 
-	ChannelLevelState<uint8_t> m_ChannelLevels[3];
-
 	uint32_t m_iTime = 0;
+
+	// Channel levels for the pulses
+	// The sawtooth channel is calculated separately and directly from the register value.
+	ChannelLevelState<uint8_t> m_ChannelLevels[2];
 };

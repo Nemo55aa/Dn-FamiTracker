@@ -142,7 +142,7 @@ private:
 	/// Never read, except for code hidden behind #ifdef LOGGING.
 	uint8_t		m_iExternalSoundChips;
 
-	std::vector<CSoundChip*> m_SoundChips2;
+	std::vector<CSoundChip*> m_SoundChips;
 
 	uint32_t	m_iSampleRate;						// // //
 	uint32_t	m_iFrameCycleCount;

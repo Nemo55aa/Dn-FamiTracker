@@ -201,7 +201,7 @@ void CMixer::RecomputeEmuMixState()
 
 	// See https://docs.google.com/document/d/19vtipTYI-vqL3-BPrE9HPjHmPpkFuIZKvWfevP3Oo_A/edit#heading=h.h70ipevgjbn7
 	// for an exploration of how I came to this design.
-	for (auto* chip : m_APU->m_SoundChips2) {
+	for (auto* chip : m_APU->m_SoundChips) {
 		chip->UpdateFilter(eq);
 	}
 
@@ -230,20 +230,14 @@ void CMixer::RecomputeEmuMixState()
 	chipN163.UpdateMixLevel(Volume * m_fLevelN163, UseSurveyMixing);
 	chipS5B.UpdateMixLevel(Volume * m_fLevelS5B, UseSurveyMixing);
 
-	if (UseSurveyMixing) {
-		chipVRC7.UpdateMixLevel(Volume * m_fLevelVRC7, UseSurveyMixing);
-	}
-	else {
-		// match legacy expansion audio mixing
-		// VRC7 level does not decrease as you enable expansion chips
-		chipVRC7.UpdateMixLevel(m_MixerConfig.OverallVol * m_fLevelVRC7);
-	}
+	// In legacy mixing, VRC7 level does not decrease as you enable more expansion chips.
+	chipVRC6.UpdateMixLevel((UseSurveyMixing ? Volume : m_MixerConfig.OverallVol), UseSurveyMixing);
 
 	// Update per-chip filtering and emulation
-
 	chipN163.UpdateN163Filter(m_MixerConfig.N163Lowpass, m_EmulatorConfig.N163DisableMultiplexing);
 	chipFDS.UpdateFDSFilter(m_MixerConfig.FDSLowpass);
 
+	// Update the patch ROM for the VRC7 chip
 	ASSERT(!m_EmulatorConfig.UseOPLLPatchBytes.empty());
 	ASSERT(m_EmulatorConfig.UseOPLLPatchBytes.size() == 19 * 8);
 
@@ -279,9 +273,9 @@ void CMixer::SetClockRate(uint32_t Rate)
 	BlipBuffer.clock_rate(Rate);
 
 	// Propagate the change to any sound chips with their own Blip_Buffer.
-	// Note that m_APU->m_SoundChips2 may not have been initialized yet,
+	// Note that m_APU->m_SoundChips may not have been initialized yet,
 	// so CAPU::SetExternalSound() does the same thing.
-	for (auto * chip : m_APU->m_SoundChips2) {
+	for (auto * chip : m_APU->m_SoundChips) {
 		chip->SetClockRate(Rate);
 	}
 }
@@ -335,35 +329,11 @@ void CMixer::FinishBuffer(int t)
 			}
 		}
 	}
-
-	auto& chip2A03 = *m_APU->m_p2A03;
-	for (int i = 0; i < 5; i++)
-		StoreChannelLevel(CHANID_SQUARE1 + i, get_channel_level(chip2A03, i));
-
-	auto& chipMMC5 = *m_APU->m_pMMC5;
-	for (int i = 0; i < 2; ++i)
-		StoreChannelLevel(CHANID_MMC5_SQUARE1 + i, get_channel_level(chipMMC5, i));
-
-	auto& chipVRC6 = *m_APU->m_pVRC6;
-	for (int i = 0; i < 3; ++i)
-		StoreChannelLevel(CHANID_VRC6_PULSE1 + i, get_channel_level(chipVRC6, i));
 	
-	auto& chipFDS = *m_APU->m_pFDS;
-	for (int i = 0; i < 1; ++i)
-		StoreChannelLevel(CHANID_FDS + 1, get_channel_level(chipFDS, i));
-
-	auto& chipVRC7 = *m_APU->m_pVRC7;
-	for (int i = 0; i < 6; ++i)
-		StoreChannelLevel(CHANID_VRC7_CH1 + i, get_channel_level(chipVRC7, i));
-
-	auto& chipN163 = *m_APU->m_pN163;
-	for (int i = 0; i < 8; i++)
-		StoreChannelLevel(CHANID_N163_CH1 + i, get_channel_level(chipN163, i));
-
-	auto& chipS5B = *m_APU->m_pS5B;
-	for (int i = 0; i < 3; ++i)
-		StoreChannelLevel(CHANID_S5B_CH1 + i, get_channel_level(chipS5B, i));
-
+	for (auto* chip : m_APU->m_SoundChips) {
+		for (int i = 0; i < chip->GetChannelCount(); i++)
+			StoreChannelLevel(chip->GetFirstChannelID() + i, get_channel_level(*chip, i));
+	}
 }
 
 //

@@ -107,6 +107,9 @@ public:
 	uint8_t	GetDeltaCounter() const;
 	bool	DPCMPlaying() const;
 
+	uint8_t GetChannelCount() const override { return 5; }; // TODO: Dynamically calculate this?
+	chan_id_t GetFirstChannelID() const override { return CHANID_SQUARE1; };
+
 private:
 	/// Referenced by m_Apu2.
 	CSampleMem m_SampleMem;

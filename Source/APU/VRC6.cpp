@@ -26,6 +26,7 @@
 
 CVRC6::CVRC6()
 {
+	// VRC6 mapped registers
 	m_pRegisterLogger->AddRegisterRange(0x9000, 0x9003);
 	m_pRegisterLogger->AddRegisterRange(0xA000, 0xA002);
 	m_pRegisterLogger->AddRegisterRange(0xB000, 0xB002);
@@ -52,11 +53,14 @@ void CVRC6::SetClockRate(uint32_t Rate)
 
 void CVRC6::Write(uint16_t Address, uint8_t Value)
 {
+	// VRC6 internal audio registers are freely exposed and mapped to memory.
 	m_VRC6.Write(Address, Value);
 }
 
 uint8_t CVRC6::Read(uint16_t Address, bool& Mapped)
 {
+	// VRC6 internal audio registers are write-only.
+	// Reading from this area is reading from mapped cartridge ROM instead.
 	Mapped = false;
 	return 0;
 }
@@ -66,6 +70,7 @@ void CVRC6::EndFrame(Blip_Buffer& Output, gsl::span<int16_t> TempBuffer)
 	m_iTime = 0;
 }
 
+// Clock the emulation core and output to the buffer.
 void CVRC6::Process(uint32_t Time, Blip_Buffer& Output)
 {
 	uint32_t now = 0;
@@ -81,7 +86,6 @@ void CVRC6::Process(uint32_t Time, Blip_Buffer& Output)
 
 		m_ChannelLevels[0].update(m_VRC6.out[0]);
 		m_ChannelLevels[1].update(m_VRC6.out[1]);
-		m_ChannelLevels[2].update(m_VRC6.volume[2]>>2);
 	};
 
 	while (now < Time) {
@@ -100,7 +104,8 @@ double CVRC6::GetFreq(int Channel) const		// // //
 
 int CVRC6::GetChannelLevel(int Channel)
 {
-	return m_ChannelLevels[Channel].getLevel();
+	//     Pulse volumes                                        Sawtooth volume
+	return Channel <= 1 ? m_ChannelLevels[Channel].getLevel() : m_VRC6.volume[2] >> 1;
 }
 
 int CVRC6::GetChannelLevelRange(int Channel) const
@@ -108,6 +113,7 @@ int CVRC6::GetChannelLevelRange(int Channel) const
 	return 15;
 }
 
-void CVRC6::UpdateMixLevel(double v, bool UseSurveyMix) {
+void CVRC6::UpdateMixLevel(double v, bool UseSurveyMix)
+{
 	m_SynthVRC6.volume(UseSurveyMix ? v : v * 3.98333f, UseSurveyMix ? 15 + 15 + 31 : 500);
 }

@@ -26,6 +26,7 @@
 #include "gsl/span"
 #include <cstdint>		// // //
 #include <memory>
+#include "Types.h"
 
 class CRegisterLogger;		// // //
 class Blip_Buffer;
@@ -89,6 +90,13 @@ public:
 
 	virtual void	Log(uint16_t Address, uint8_t Value);		// // //
 	CRegisterLogger *GetRegisterLogger() const;		// // //
+
+	/// Returns the total number of channels that this sound chip has.
+	virtual uint8_t GetChannelCount() const = 0; // TODO: Dynamically calculate this?
+
+	/// Get first channel ID
+	virtual chan_id_t GetFirstChannelID() const = 0;
+
 
 protected:
 	std::unique_ptr<CRegisterLogger> m_pRegisterLogger;		// // //
