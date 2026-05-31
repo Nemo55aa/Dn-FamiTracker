@@ -43,9 +43,9 @@ public:
 	int		GetChannelLevelRange(int Channel) const override;
 	void	UpdateMixLevel(double v, bool UseSurveyMix);
 
-	// // // Report some basic information about the chip
-	uint8_t GetChannelCount() const override { return 3; };							// // // TODO: Dynamically calculate this?
-	chan_id_t GetFirstChannelID() const override { return CHANID_VRC6_PULSE1; };	// // //
+	// Report some basic information about the chip
+	uint8_t GetChannelCount() const override { return 3; };							// TODO: Dynamically calculate this?
+	chan_id_t GetFirstChannelID() const override { return CHANID_VRC6_PULSE1; };	//
 
 private:
 	// The VRC6 emulation core (currently nsfplay)

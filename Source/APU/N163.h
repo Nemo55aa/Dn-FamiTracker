@@ -50,9 +50,9 @@ public:
 	void	Log(uint16_t Address, uint8_t Value) override;		// // //
 	void	SetMixingMethod(bool bLinear);						// // //
 
-	// // // Report some basic information about the chip
-	uint8_t GetChannelCount() const override { return 8; };						// // // TODO: Dynamically calculate this?
-	chan_id_t GetFirstChannelID() const override { return CHANID_N163_CH1; };	// // //
+	// Report some basic information about the chip
+	uint8_t GetChannelCount() const override { return 8; };						// TODO: Dynamically calculate this?
+	chan_id_t GetFirstChannelID() const override { return CHANID_N163_CH1; };	//
 
 private:
 	void RecomputeN163Filter();
