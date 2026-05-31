@@ -6,11 +6,11 @@ Written by D.P.C.M.
 
 Version 0.5.3.9
 
-Last updated: 2026-05-30
+Last updated: 2026-05-31
 
 ---
 
-## Unreleased - 2026-05-30
+## Unreleased - 2026-05-31
 
 ### Breaking changes
 
@@ -22,6 +22,7 @@ Last updated: 2026-05-30
 
 ### Improvements
 
+- Allow copying entire channel row at cursor with no selection (@henrikvilhelmberglund #385)
 - Add color and font appearance setting for channel header (@Nemo55aa #413 #409)
 
 ### Bug fixes
