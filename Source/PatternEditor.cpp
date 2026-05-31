@@ -58,7 +58,6 @@ static constexpr int ROW_HEIGHT = 12;
 
 // Pattern header font
 static constexpr LPCTSTR DEFAULT_HEADER_FONT = _T("Tahoma");
-
 static constexpr int DEFAULT_HEADER_FONT_SIZE = 11;
 
 // // //

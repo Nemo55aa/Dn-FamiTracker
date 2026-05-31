@@ -493,7 +493,7 @@ BOOL CConfigAppearance::OnApply()
 	pSettings->Appearance.iColCurrentRowEdit		= m_iColors[COL_CURRENT_ROW_EDIT];
 	pSettings->Appearance.iColCurrentRowPlaying		= m_iColors[COL_CURRENT_ROW_PLAYING];
 
-	pSettings->Appearance.iColHeaderFont	= m_iColors[COL_HEADER_FONT];
+	pSettings->Appearance.iColHeaderFont			= m_iColors[COL_HEADER_FONT];
 	pSettings->Appearance.iColHeaderCorner			= m_iColors[COL_HEADER_CORNER];			// gradient col of header's top side
 	pSettings->Appearance.iColHeaderBackGnd			= m_iColors[COL_HEADER_BACKGND];		// background col of header
 

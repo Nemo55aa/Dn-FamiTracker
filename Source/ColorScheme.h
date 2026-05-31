@@ -26,6 +26,9 @@ const static TCHAR *FONT_FACE = _T("Verdana");
 const static int FONT_SIZE	  = 12;
 const static int FONT_RATIO = 100;
 
+const static TCHAR* HEADER_FONT = _T("Tahoma");
+const static int HEADER_FONT_SIZE = 11;
+
 // Static colors
 const struct {
 	static const COLORREF CHANNEL_NORMAL	= 0x00202020;	// Normal channel name

@@ -206,7 +206,7 @@ public:
 		int		iColHeaderBackGnd;	// !! !! Background color of header
 
 		CString	strFontHeader;		// Header font (e.g. Pulse1/2 Triangle)
-		int 		iHeaderFontHeight;
+		int 	iHeaderFontHeight;
 
 		CString	strFont;		// // //
 		CString	strFrameFont;		// // // 050B

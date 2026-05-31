@@ -198,9 +198,9 @@ void CSettings::SetupSettings()
 	SETTING_BOOL("Appearance", "Display flats", false, &Appearance.bDisplayFlats)
 		->UpdateDefault("Appearance", "Display flats");
 
-	SETTING_STRING("Appearance", "Header font", FONT_FACE, &Appearance.strFontHeader)
+	SETTING_STRING("Appearance", "Header font", HEADER_FONT, &Appearance.strFontHeader)
 		->UpdateDefault("General", "Header font");
-	SETTING_INT("Appearance", "HeaderFont size", FONT_SIZE, &Appearance.iHeaderFontHeight)
+	SETTING_INT("Appearance", "HeaderFont size", HEADER_FONT_SIZE, &Appearance.iHeaderFontHeight)
 		->UpdateDefault("General", "HeaderFont size");
 
 	// Window position

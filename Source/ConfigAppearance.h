@@ -89,7 +89,7 @@ protected:
 	CComboBox	fontPercentList;
 
 	CString		m_strHeaderFont;
-	int				m_headerFontHeight;
+	int			m_headerFontHeight;
 
 	int			m_iSelectedItem;
 	bool		m_bPatternColors;
