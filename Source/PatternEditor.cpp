@@ -3590,8 +3590,8 @@ CPatternClipData *CPatternEditor::Copy() const
 	pSingleNote->ClipInfo.Rows = 1;
 
 	// Always copy note, instrument, volume, and all 4 effects
-	pSingleNote->ClipInfo.StartColumn = static_cast<column_t>(C_NOTE);
-	pSingleNote->ClipInfo.EndColumn = static_cast<column_t>(C_EFF4_PARAM2);
+	pSingleNote->ClipInfo.StartColumn = COLUMN_NOTE;
+	pSingleNote->ClipInfo.EndColumn = COLUMN_EFF4;
 
 	m_pDocument->GetNoteData(Track, Frame, Channel, Row, pSingleNote->GetPattern(0, 0));
 	return pSingleNote;
