@@ -200,8 +200,8 @@ void CSettings::SetupSettings()
 
 	SETTING_STRING("Appearance", "Header font", HEADER_FONT, &Appearance.strFontHeader)
 		->UpdateDefault("General", "Header font");
-	SETTING_INT("Appearance", "HeaderFont size", HEADER_FONT_SIZE, &Appearance.iHeaderFontHeight)
-		->UpdateDefault("General", "HeaderFont size");
+	SETTING_INT("Appearance", "Header font size", HEADER_FONT_SIZE, &Appearance.iHeaderFontHeight)
+		->UpdateDefault("General", "Header font size");
 
 	// Window position
 	SETTING_INT("Window position", "Left", 100, &WindowPos.iLeft);
