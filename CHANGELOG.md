@@ -18,7 +18,7 @@ Last updated: 2026-05-31
 
 ### Important changes
 
-- ...
+- Update MMC5, VRC6, and S5B emulation cores (@eulyderg #417)
 
 ### Improvements
 
