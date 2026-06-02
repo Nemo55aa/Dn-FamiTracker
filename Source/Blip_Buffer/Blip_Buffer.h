@@ -171,7 +171,7 @@ private:
     class Blip_Synth_Fast_ {
     public:
         int last_amp = 0;
-        int delta_factor;
+        double delta_factor;
 
         void volume_unit( double );
         Blip_Synth_Fast_();
@@ -181,7 +181,7 @@ private:
     class Blip_Synth_ {
     public:
         int last_amp = 0;
-        int delta_factor;
+        double delta_factor;
 
         void volume_unit( double );
         Blip_Synth_( short* impulses, int width );
@@ -199,16 +199,15 @@ private:
 const int blip_med_quality  = 8;
 const int blip_good_quality = 12;
 const int blip_high_quality = 16;
-
-// Range specifies the greatest expected change in amplitude. Calculate it
-// by finding the difference between the maximum and minimum expected
-// amplitudes (max - min).
 template<int quality>
 class Blip_Synth {
 public:
     // Set overall volume of waveform
     // The actual output value (assuming no DC removal) is around
     // (amplitude / range) * volume * 65536.
+    // Range specifies the greatest expected change in amplitude. Calculate it
+    // by finding the difference between the maximum and minimum expected
+    // amplitudes (max - min).
     void volume( double v, unsigned int range ) { impl.volume_unit( v / range ); }
 
     // Configure low-pass filter (see blip_buffer.txt)
@@ -373,7 +372,7 @@ inline void Blip_Synth<quality>::offset_resampled( blip_resampled_time_t time,
     // Fails if time is beyond end of Blip_Buffer, due to a bug in caller code or the
     // need for a longer buffer as set by set_sample_rate().
     assert( (blip_long) (time >> BLIP_BUFFER_ACCURACY) < blip_buf->buffer_size_ );
-    delta *= impl.delta_factor;
+    delta = (int)((double)delta * impl.delta_factor);
     blip_long* BLIP_RESTRICT buf = blip_buf->buffer_ + (time >> BLIP_BUFFER_ACCURACY);
     int phase = (int) (time >> (BLIP_BUFFER_ACCURACY - BLIP_PHASE_BITS) & (blip_res - 1));
 
