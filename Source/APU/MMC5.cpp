@@ -111,5 +111,5 @@ int CMMC5::GetChannelLevelRange(int Channel) const
 
 void CMMC5::UpdateMixLevel(double v, bool UseSurveyMix)
 {
-	m_SynthMMC5.volume(UseSurveyMix ? v : v * 1.18421f, UseSurveyMix ? 8191 : 10000);
+	m_SynthMMC5.volume(v, UseSurveyMix ? 8191 : 10000);
 }

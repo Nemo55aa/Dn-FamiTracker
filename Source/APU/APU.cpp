@@ -574,36 +574,72 @@ void CAPUConfig::SetupMixer(
 	};
 }
 
+/*
+Compensate for emulator output gain differences. This is done by
+setting them to `0.0`, measuring the delta db RMS, and compensating to
+match the `mixe` reference gain.
+
+These constants are also saved in the registry as "<chip> survey level"
+Dn-FamiTracker uses NSFPlay's mixe constants as reference, in millibels
+- APU1:	===
+- APU2:	-20
+- VRC6:	0
+- VRC7:	1340
+- FDS:	690
+- MMC5:	0
+- N163:	1540
+- S5B:	-250
+*/
+constexpr double SURVEY_LEVEL_DB_CORRECTION[CHIP_LEVEL_COUNT]{
+	  0.0,  // APU1
+	 -0.12, // APU2
+	 -4.33, // VRC6
+	  8.33, // VRC7
+	-16.11, // FDS
+	  0.0,  // MMC5
+	-16.44, // N163
+	  2.09  // S5B
+};
+
+/*
+Legacy volume adjustments. This is done by setting them to `0.0`,
+measuring the delta db RMS, and compensating to match the reference
+gain observed in 0CC v0.3.14.5 and FT v0.5.0 beta 10.
+
+Before the refactoring of CSoundChip and CMixer, levels were adjusted
+by multiplying a factor into the chip's blip synth somewhere in source:
+	VRC6:	3.98333f
+	MMC5:	1.18421f
+	VRC7:	4.6f;	patch 14 is 4, 88 times stronger than a 50 % square @ v = 15
+	N163:	1.3f if single channel, else: (1.5f + (Channels - 1) / 1.5f)
+*/
+constexpr double LEGACY_LEVEL_DB_CORRECTION[CHIP_LEVEL_COUNT]{
+	 0.0,   // APU1
+	-0.65,  // APU2
+	12.15,  // VRC6
+	 9.72,  // VRC7; its own amplification is absolute
+	 4.43,  // FDS
+	 1.06,  // MMC5
+	 0.25,  // N163; further dynamically calculated
+	 0.89   // S5B
+};
+
 // must be called after SetupMixer()
 // Device chip levels needs to be initialized first
-void CAPUConfig::SetChipLevel(chip_level_t Chip, float LeveldB, bool SurveyMix)
+void CAPUConfig::SetChipLevel(chip_level_t Chip, double LeveldB, bool SurveyMix)
 {
+	double Mix = LeveldB;
+	Mix += static_cast<double>(m_MixerConfig->DeviceMixOffsets[Chip]) / 10.0;
+
+	if (SurveyMix)
+		// chipleveldb = SurveyConfig + ModuleMix + SurveyCorrection
+		Mix += SURVEY_LEVEL_DB_CORRECTION[Chip];
+	else
+		// chipleveldb = MixerConfig + ModuleMix + LegacyCorrection
+		Mix += LEGACY_LEVEL_DB_CORRECTION[Chip];
+
 	// Convert dB to linear
-	float LevelLinear = 1.0f;
-	if (SurveyMix) {
-		// Compensate for blip_buffer output scaling differences
-		// values are derived by setting m_ChipLevels[] to 1.0
-		// and measuring the dB RMS delta between APU1 and other chips
-		// using methods described here: https://www.nesdev.org/wiki/NSFe#mixe
-		// TODO: investigate issues with rounding error
-		int16_t dblevelcorrection[CHIP_LEVEL_COUNT]{
-			0,		// APU1
-			-13,	// APU2
-			-494,	// VRC6
-			776,	// VRC7
-			-1700,	// FDS
-			0,	// MMC5
-			-1681,	// N163
-			108		// S5B
-		};
-		LevelLinear = powf(10, (LeveldB +
-			((static_cast<float>(dblevelcorrection[Chip]) / 100.0f)) +
-				(static_cast<float>(m_MixerConfig->DeviceMixOffsets[Chip]) / 10.0f)) / 20.0f);
-	}
-	else {
-		LevelLinear = powf(10, (LeveldB +
-			(static_cast<float>(m_MixerConfig->DeviceMixOffsets[Chip]) / 10.0f)) / 20.0f);
-	}
+	double LevelLinear = pow(10, Mix / 20.0);
 
 	m_ChipLevels[Chip] = LevelLinear;
 }

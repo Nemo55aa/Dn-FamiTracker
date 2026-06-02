@@ -162,7 +162,7 @@ public:
 	int		ReadBuffer(void *Buffer);
 
 	int32_t	GetChanOutput(uint8_t Chan) const;
-	void	SetChipLevel(chip_level_t Chip, float Level);
+	void	SetChipLevel(chip_level_t Chip, double Level);
 	uint32_t	ResampleDuration(uint32_t Time) const;
 
 	int		GetMeterDecayRate() const;		// // // 050B
@@ -200,14 +200,8 @@ private:
 
 	// device level gain multipliers, in linear scale
 	// default level (0dB) is at 1.0
-	float		m_fLevelAPU1;
-	float		m_fLevelAPU2;
-	float		m_fLevelVRC6;
-	float		m_fLevelVRC7;
-	float		m_fLevelMMC5;
-	float		m_fLevelFDS;
-	float		m_fLevelN163;
-	float		m_fLevelS5B;		// // // 050B
+	// TODO: merge this with the one in CAPU
+	double		m_ChipLevels[CHIP_LEVEL_COUNT];
 
 	friend class CAPU;
 };

@@ -225,7 +225,7 @@ void CFDS::UpdateMixLevel(double v, bool UseSurveyMix)
 	// (m_SynthFDS: FdsAudio) used to generate output samples between [0..63] inclusive,
 	// but was changed to  [0 .. 63*1152] inclusive to prevent quantization at low volumes.
 
-	m_SynthFDS.volume(UseSurveyMix ? v : (v * 1.122f), UseSurveyMix ? (63 * 1152) : (256 * 1152));
+	m_SynthFDS.volume(v, UseSurveyMix ? (63 * 1152) : (256 * 1152));
 }
 
 /// Input:

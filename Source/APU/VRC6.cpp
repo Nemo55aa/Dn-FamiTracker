@@ -115,5 +115,5 @@ int CVRC6::GetChannelLevelRange(int Channel) const
 
 void CVRC6::UpdateMixLevel(double v, bool UseSurveyMix)
 {
-	m_SynthVRC6.volume(UseSurveyMix ? v : v * 3.98333f, UseSurveyMix ? 15 + 15 + 31 : 500);
+	m_SynthVRC6.volume(v, UseSurveyMix ? (15 + 15 + 31) : 500);
 }

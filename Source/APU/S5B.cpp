@@ -183,5 +183,5 @@ int CS5B::GetChannelLevelRange(int Channel) const
 
 void CS5B::UpdateMixLevel(double v, bool UseSurveyMix)
 {
-	m_SynthS5B.volume(v, UseSurveyMix ? 255 + 255 + 255 : 1200);
+	m_SynthS5B.volume(v, UseSurveyMix ? (255 + 255 + 255) : 1200);
 }

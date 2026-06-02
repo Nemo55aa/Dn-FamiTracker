@@ -89,14 +89,8 @@ CMixer::CMixer(CAPU* Parent)
 	memset(m_fChannelLevels, 0, sizeof(float) * CHANNELS);
 	memset(m_iChanLevelFallOff, 0, sizeof(uint32_t) * CHANNELS);
 
-	m_fLevelAPU1 = 1.0f;
-	m_fLevelAPU2 = 1.0f;
-	m_fLevelVRC6 = 1.0f;
-	m_fLevelVRC7 = 1.0f;
-	m_fLevelMMC5 = 1.0f;
-	m_fLevelFDS = 1.0f;
-	m_fLevelN163 = 1.0f;
-	m_fLevelS5B = 1.0f;		// // // 050B
+	for (auto i : m_ChipLevels)
+		i = 1.0;
 
 	m_iExternalChip = 0;
 	m_iSampleRate = 0;
@@ -113,36 +107,9 @@ void CMixer::ExternalSound(int Chip)
 	m_iExternalChip = Chip;
 }
 
-void CMixer::SetChipLevel(chip_level_t Chip, float Level)
+void CMixer::SetChipLevel(chip_level_t Chip, double Level)
 {
-	switch (Chip) {
-	case CHIP_LEVEL_APU1:
-		m_fLevelAPU1 = Level;
-		break;
-	case CHIP_LEVEL_APU2:
-		m_fLevelAPU2 = Level;
-		break;
-	case CHIP_LEVEL_VRC6:
-		m_fLevelVRC6 = Level;
-		break;
-	case CHIP_LEVEL_VRC7:
-		m_fLevelVRC7 = Level;
-		break;
-	case CHIP_LEVEL_FDS:
-		m_fLevelFDS = Level;
-		break;
-	case CHIP_LEVEL_MMC5:
-		m_fLevelMMC5 = Level;
-		break;
-	case CHIP_LEVEL_N163:
-		m_fLevelN163 = Level;
-		break;
-	case CHIP_LEVEL_S5B:		// // // 050B
-		m_fLevelS5B = Level;
-		break;
-	case CHIP_LEVEL_COUNT:
-		break;
-	}
+	m_ChipLevels[Chip] = Level;
 }
 
 float CMixer::GetAttenuation(bool UseSurveyMix) const
@@ -150,12 +117,12 @@ float CMixer::GetAttenuation(bool UseSurveyMix) const
 	float ATTENUATION_2A03 = 1.0f;
 
 	if (!UseSurveyMix) {
-		const float ATTENUATION_VRC6 = 0.80f;
-		const float ATTENUATION_VRC7 = 0.64f;
-		const float ATTENUATION_MMC5 = 0.83f;
-		const float ATTENUATION_FDS = 0.90f;
-		const float ATTENUATION_N163 = 0.70f;
-		const float ATTENUATION_S5B = 0.50f;		// // // 050B
+		constexpr float ATTENUATION_VRC6 = 0.80f;
+		constexpr float ATTENUATION_VRC7 = 0.64f;
+		constexpr float ATTENUATION_MMC5 = 0.83f;
+		constexpr float ATTENUATION_FDS = 0.90f;
+		constexpr float ATTENUATION_N163 = 0.70f;
+		constexpr float ATTENUATION_S5B = 0.50f;		// // // 050B
 
 		// Increase headroom if some expansion chips are enabled
 
@@ -216,22 +183,25 @@ void CMixer::RecomputeEmuMixState()
 
 	bool UseSurveyMixing = m_MixerConfig.UseSurveyMix;
 
-	float Volume = m_MixerConfig.OverallVol * GetAttenuation(UseSurveyMixing);
+	double Volume = m_MixerConfig.OverallVol * GetAttenuation(UseSurveyMixing);
 	
 	// Update mixing
 
 	// Maybe the range argument, as well as the constant factor in the volume,
 	// should be supplied by the CSoundChip subclass rather than CMixer.
-	chip2A03.UpdateMixingAPU1(Volume * m_fLevelAPU1, UseSurveyMixing);
-	chip2A03.UpdateMixingAPU2(Volume * m_fLevelAPU2, UseSurveyMixing);
-	chipMMC5.UpdateMixLevel(Volume * m_fLevelMMC5, UseSurveyMixing);
-	chipVRC6.UpdateMixLevel(Volume * m_fLevelVRC6, UseSurveyMixing);
-	chipFDS.UpdateMixLevel(Volume * m_fLevelFDS, UseSurveyMixing);
-	chipN163.UpdateMixLevel(Volume * m_fLevelN163, UseSurveyMixing);
-	chipS5B.UpdateMixLevel(Volume * m_fLevelS5B, UseSurveyMixing);
+	chip2A03.UpdateMixingAPU1(Volume * m_ChipLevels[CHIP_LEVEL_APU1], UseSurveyMixing);
+	chip2A03.UpdateMixingAPU2(Volume * m_ChipLevels[CHIP_LEVEL_APU2], UseSurveyMixing);
+	chipMMC5.UpdateMixLevel(Volume * m_ChipLevels[CHIP_LEVEL_MMC5], UseSurveyMixing);
+	chipVRC6.UpdateMixLevel(Volume * m_ChipLevels[CHIP_LEVEL_VRC6], UseSurveyMixing);
+	chipFDS.UpdateMixLevel(Volume * m_ChipLevels[CHIP_LEVEL_FDS], UseSurveyMixing);
+	chipN163.UpdateMixLevel(Volume * m_ChipLevels[CHIP_LEVEL_N163], UseSurveyMixing);
+	chipS5B.UpdateMixLevel(Volume * m_ChipLevels[CHIP_LEVEL_S5B], UseSurveyMixing);
 
 	// In legacy mixing, VRC7 level does not decrease as you enable more expansion chips.
-	chipVRC6.UpdateMixLevel((UseSurveyMixing ? Volume : m_MixerConfig.OverallVol), UseSurveyMixing);
+	chipVRC7.UpdateMixLevel(
+		(UseSurveyMixing ? Volume : m_MixerConfig.OverallVol) * m_ChipLevels[CHIP_LEVEL_VRC7],
+		UseSurveyMixing
+	);
 
 	// Update per-chip filtering and emulation
 	chipN163.UpdateN163Filter(m_MixerConfig.N163Lowpass, m_EmulatorConfig.N163DisableMultiplexing);
