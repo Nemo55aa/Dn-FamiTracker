@@ -34,7 +34,6 @@ CS5B::CS5B() :
 	// choose YM2149 mode
 	PSG_setClockDivider(m_S5B, 1);
 	PSG_setVolumeMode(m_S5B, 1);
-	PSG_setQuality(m_S5B, 0);
 
 	// 5B internal registers
 	m_pRegisterLogger->AddRegisterRange(0x00, 0x0F);
@@ -128,13 +127,39 @@ uint8_t CS5B::output_to_level(int output) const
 	return 0x00;
 }
 
+// based on FT 0.5.0 algorithm
+uint32_t CS5B::ClocksUntilLevelChange(uint32_t Time)
+{
+	uint32_t toneclocks = Time;
+
+	for (int i = 0; i < 3; i++) {
+		if (m_S5B->freq[i] > 2 && m_S5B->volume[i])
+			toneclocks = m_S5B->freq[i] - m_S5B->count[i];
+		Time = std::min(toneclocks, Time);
+	}
+	if (m_S5B->env_count < m_S5B->env_freq)
+		Time = std::min(
+			m_S5B->env_freq - m_S5B->env_count,
+			Time
+		);
+
+	if (m_S5B->noise_count < m_S5B->noise_freq)
+		Time = std::min<uint32_t>(
+			m_S5B->noise_freq - m_S5B->noise_count,
+			Time
+		);
+
+	return Time;
+}
+
 // Clock the emulation core and output to the buffer.
 void CS5B::Process(uint32_t Time, Blip_Buffer& Output)
 {
 	uint32_t now = 0;
-	
-	// TODO: calculate number of clock cycles until the level changes
+
 	auto get_output = [this](uint32_t dclocks, uint32_t now, Blip_Buffer& blip_buf) {
+		Tick(m_S5B, dclocks);
+
 		int32_t out = PSG_calc(m_S5B);
 		m_SynthS5B.update(m_iTime + now, out, &blip_buf);
 
@@ -143,10 +168,10 @@ void CS5B::Process(uint32_t Time, Blip_Buffer& Output)
 		m_ChannelLevels[2].update(output_to_level(m_S5B->ch_out[2]));
 	};
 
-	while (now < Time) {
-		//auto dclocks = vmin(ClocksUntilLevelChange(), Time - now);
-		get_output(1, now, Output);
-		++now;
+	while (Time > now) {
+		auto dclocks = std::min(ClocksUntilLevelChange(Time), Time - now);
+		get_output(dclocks, now, Output);
+		now += dclocks;
 	}
 
 	m_iTime += Time;

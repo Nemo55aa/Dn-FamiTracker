@@ -420,20 +420,12 @@ PSG_writeReg (PSG * psg, uint32_t reg, uint32_t val)
   return;
 }
 
-// DnFT integrations
-
+// tick clocks-1 times
+// the last tick is from grabbing the final output
 void
 Tick(PSG *psg, uint32_t clocks)
 {
-  uint32_t timer = clocks;
-  while (timer-- > 0) {
+  if (clocks <= 1) return;
+  while (--clocks > 0)
     update_output(psg);
-  }
-}
-
-// TODO: figure out an algorithm based on 5B state
-uint32_t
-ClocksUntilLevelChange()
-{
-  return 0;
 }

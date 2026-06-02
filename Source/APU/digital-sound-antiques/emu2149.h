@@ -84,8 +84,7 @@ extern "C"
     
 
   // DnFT integration
-  void Tick();
-  uint32_t ClocksUntilLevelChange();
+  void Tick(PSG *psg, uint32_t clocks);
 #ifdef __cplusplus
 }
 #endif

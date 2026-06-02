@@ -50,6 +50,8 @@ private:
 	// This function takes the 5B channel output from 0-255 and recovers the volume level for the meter
 	uint8_t output_to_level(int output) const;
 
+	uint32_t ClocksUntilLevelChange(uint32_t Time);
+
 	// The S5B emulation core (currently emu2149)
 	PSG *m_S5B;
 
