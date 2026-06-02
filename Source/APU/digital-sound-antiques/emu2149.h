@@ -82,6 +82,10 @@ extern "C"
   uint32_t PSG_setMask (PSG *, uint32_t mask);
   uint32_t PSG_toggleMask (PSG *, uint32_t mask);
     
+
+  // DnFT integration
+  void Tick();
+  uint32_t ClocksUntilLevelChange();
 #ifdef __cplusplus
 }
 #endif

@@ -419,3 +419,21 @@ PSG_writeReg (PSG * psg, uint32_t reg, uint32_t val)
 
   return;
 }
+
+// DnFT integrations
+
+void
+Tick(PSG *psg, uint32_t clocks)
+{
+  uint32_t timer = clocks;
+  while (timer-- > 0) {
+    update_output(psg);
+  }
+}
+
+// TODO: figure out an algorithm based on 5B state
+uint32_t
+ClocksUntilLevelChange()
+{
+  return 0;
+}

@@ -29,12 +29,12 @@ CS5B::CS5B() :
 	m_cPort(0)
 {
 	// Set up the emulation core with parameters
-	m_S5B = PSG_new(m_BlipS5B.sample_rate(), m_BlipS5B.sample_rate() / 8);
-
-	PSG_setQuality(m_S5B, 0);
-	PSG_setClock(m_S5B, m_BlipS5B.sample_rate());
-	PSG_setRate(m_S5B, m_BlipS5B.sample_rate());
+	// clock and rate will be updated in SetClockRate()
+	m_S5B = PSG_new(m_BlipS5B.clock_rate(), m_BlipS5B.clock_rate());
+	// choose YM2149 mode
 	PSG_setClockDivider(m_S5B, 1);
+	PSG_setVolumeMode(m_S5B, 1);
+	PSG_setQuality(m_S5B, 0);
 
 	// 5B internal registers
 	m_pRegisterLogger->AddRegisterRange(0x00, 0x0F);
@@ -51,15 +51,13 @@ void CS5B::Reset()
 void CS5B::UpdateFilter(blip_eq_t eq)
 {
 	m_SynthS5B.treble_eq(eq);
-	m_BlipS5B.set_sample_rate(eq.sample_rate);
-	
-	PSG_setClock(m_S5B, eq.sample_rate);
-	PSG_setRate(m_S5B, eq.sample_rate);
 }
 
 void CS5B::SetClockRate(uint32_t Rate)
 {
 	m_BlipS5B.clock_rate(Rate);
+	PSG_setClock(m_S5B, Rate);
+	PSG_setRate(m_S5B, Rate);
 }
 
 void CS5B::Write(uint16_t Address, uint8_t Value)
@@ -146,7 +144,7 @@ void CS5B::Process(uint32_t Time, Blip_Buffer& Output)
 	};
 
 	while (now < Time) {
-		//auto dclocks = vmin(m_SynthS5B.ClocksUntilLevelChange(), Time - now);
+		//auto dclocks = vmin(ClocksUntilLevelChange(), Time - now);
 		get_output(1, now, Output);
 		++now;
 	}
