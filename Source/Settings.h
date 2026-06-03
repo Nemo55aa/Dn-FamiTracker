@@ -194,6 +194,7 @@ public:
 		int		iColPatternTextHilite2;
 		int		iColPatternInstrument;
 		int		iColPatternVolume;
+		int		iColPatternVolume2;
 		int		iColPatternEffect;
 		int		iColSelection;
 		int		iColCursor;

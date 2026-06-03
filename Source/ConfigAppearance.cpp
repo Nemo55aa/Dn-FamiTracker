@@ -47,6 +47,7 @@ const TCHAR *CConfigAppearance::COLOR_ITEMS[] = {
 	_T("Highlighted pattern text 2"),
 	_T("Instrument column"),
 	_T("Volume column"),
+	_T("Volume column 2"),
 	_T("Effect number column"),
 	_T("Selection"),
 	_T("Cursor"),
@@ -315,11 +316,31 @@ void CConfigAppearance::OnPaint()
 #define BAR(x, y) dc.FillSolidRect((x) + 3, (y) + (iRowSize / 2) + 1, 10 - 7, 1, ShadedCol)
 
 		if (i == 0) {
-			dc.TextOut(OffsetLeft, OffsetTop - 2, _T("C"));
+			// Notes column
+			dc.SetTextColor(GetColor(COL_PATTERN_TEXT_HILITE));
+			dc.TextOut(OffsetLeft, 		OffsetTop - 2, _T("C"));
 			dc.TextOut(OffsetLeft + 12, OffsetTop - 2, _T("-"));
 			dc.TextOut(OffsetLeft + 24, OffsetTop - 2, _T("4"));
+			
+			// Inst. column
+			dc.SetTextColor(GetColor(COL_PATTERN_INSTRUMENT));
+			dc.TextOut(OffsetLeft + 40, OffsetTop - 2, _T("0"));
+			dc.TextOut(OffsetLeft + 52, OffsetTop - 2, _T("0"));
+			
+			// Volume column
+			dc.SetTextColor(GetColor(COL_PATTERN_VOLUME));
+			dc.TextOut(OffsetLeft + 68, OffsetTop - 2, _T("F"));
+			
+			// Effect column
+			dc.SetTextColor(GetColor(COL_PATTERN_EFF_NUM));
+			dc.TextOut(OffsetLeft + 84, OffsetTop - 2, _T("4"));
+			dc.TextOut(OffsetLeft + 96, OffsetTop - 2, _T("6"));
+			dc.TextOut(OffsetLeft + 108, OffsetTop - 2, _T("1"));
+			
+			dc.SetTextColor(GetColor(COL_PATTERN_TEXT_HILITE));
 		}
 		else {
+			// Notes column
 			BAR(OffsetLeft, OffsetTop - 2);
 			BAR(OffsetLeft + 12, OffsetTop - 2);
 			BAR(OffsetLeft + 24, OffsetTop - 2);
@@ -331,14 +352,41 @@ void CConfigAppearance::OnPaint()
 		else {
 			dc.SetTextColor(ShadedCol);
 		}
+		if(i != 0) {
+			// Inst. column
+			BAR(OffsetLeft + 40, OffsetTop - 2);
+			BAR(OffsetLeft + 52, OffsetTop - 2);
 
-		BAR(OffsetLeft + 40, OffsetTop - 2);
-		BAR(OffsetLeft + 52, OffsetTop - 2);
-		BAR(OffsetLeft + 68, OffsetTop - 2);
-		BAR(OffsetLeft + 84, OffsetTop - 2);
-		BAR(OffsetLeft + 96, OffsetTop - 2);
+			// Volume column
+			if((0xF / 2) >= i) {
+				CString tmpVolStr;
+				int iTmpblendLevel = 0xE - i * 2;
+				COLORREF tmpVolColBlended;
+
+				tmpVolColBlended = \
+					BLEND(
+						GetColor(COL_PATTERN_VOLUME), 
+						GetColor(COL_PATTERN_VOLUME2),
+						(int)(((double)iTmpblendLevel / 15.0) * 100.0)
+					);
+				dc.SetTextColor(tmpVolColBlended);
+
+				tmpVolStr.Format("%X", 0xE - i * 2);
+				dc.TextOut(OffsetLeft + 68, OffsetTop - 2, tmpVolStr);
+
+				dc.SetTextColor(GetColor(COL_PATTERN_TEXT_HILITE));
+			} else {
+				BAR(OffsetLeft + 68, OffsetTop - 2);
+			}
+
+			// Effect column
+			BAR(OffsetLeft + 84, OffsetTop - 2);
+			BAR(OffsetLeft + 96, OffsetTop - 2);
+			BAR(OffsetLeft + 108, OffsetTop - 2);
 		// Removed call to BAR() because it overflows available space.
+		}
 	}
+#undef BAR
 
 	dc.SelectObject(OldFont);
 }
@@ -392,6 +440,7 @@ BOOL CConfigAppearance::OnInitDialog()
 	m_iColors[COL_PATTERN_TEXT_HILITE2]	= pSettings->Appearance.iColPatternTextHilite2;
 	m_iColors[COL_PATTERN_INSTRUMENT]	= pSettings->Appearance.iColPatternInstrument;
 	m_iColors[COL_PATTERN_VOLUME]		= pSettings->Appearance.iColPatternVolume;
+	m_iColors[COL_PATTERN_VOLUME2]		= pSettings->Appearance.iColPatternVolume2;
 	m_iColors[COL_PATTERN_EFF_NUM]		= pSettings->Appearance.iColPatternEffect;
 	m_iColors[COL_SELECTION]			= pSettings->Appearance.iColSelection;
 	m_iColors[COL_CURSOR]				= pSettings->Appearance.iColCursor;
@@ -486,6 +535,7 @@ BOOL CConfigAppearance::OnApply()
 	pSettings->Appearance.iColPatternTextHilite2	= m_iColors[COL_PATTERN_TEXT_HILITE2];
 	pSettings->Appearance.iColPatternInstrument		= m_iColors[COL_PATTERN_INSTRUMENT];
 	pSettings->Appearance.iColPatternVolume			= m_iColors[COL_PATTERN_VOLUME];
+	pSettings->Appearance.iColPatternVolume2		= m_iColors[COL_PATTERN_VOLUME2];
 	pSettings->Appearance.iColPatternEffect			= m_iColors[COL_PATTERN_EFF_NUM];
 	pSettings->Appearance.iColSelection				= m_iColors[COL_SELECTION];
 	pSettings->Appearance.iColCursor				= m_iColors[COL_CURSOR];
@@ -573,6 +623,7 @@ void CConfigAppearance::SelectColorScheme(const COLOR_SCHEME *pColorScheme)
 	SetColor(COL_PATTERN_INSTRUMENT, pColorScheme->TEXT_INSTRUMENT);
 	SetColor(COL_PATTERN_VOLUME, pColorScheme->TEXT_VOLUME);
 	SetColor(COL_PATTERN_EFF_NUM, pColorScheme->TEXT_EFFECT);
+	SetColor(COL_PATTERN_VOLUME2, 	pColorScheme->TEXT_VOLUME2);
 	SetColor(COL_SELECTION, pColorScheme->SELECTION);
 	SetColor(COL_CURSOR, pColorScheme->CURSOR);
 	SetColor(COL_CURRENT_ROW_NORMAL, pColorScheme->ROW_NORMAL);		// // //

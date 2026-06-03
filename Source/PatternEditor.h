@@ -32,6 +32,7 @@ struct RowColorInfo_t {
 	COLORREF Note;
 	COLORREF Instrument;
 	COLORREF Volume;
+	COLORREF Volume2Fade;
 	COLORREF Effect;
 	COLORREF Back;
 	COLORREF Shaded;

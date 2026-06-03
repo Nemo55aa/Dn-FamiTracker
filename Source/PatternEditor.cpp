@@ -1246,21 +1246,27 @@ void CPatternEditor::DrawRow(CDC *pDC, int Row, int Line, int Frame, bool bPrevi
 	colorInfo.Compact = BLEND(TextColor, colorInfo.Back, SHADE_LEVEL.PREVIEW);		// // //
 
 	if (!pSettings->Appearance.bPatternColor) {		// // //
-		colorInfo.Instrument = colorInfo.Volume = colorInfo.Effect = colorInfo.Note;
+		colorInfo.Instrument = \
+		colorInfo.Volume = \
+		colorInfo.Volume2Fade = \
+		colorInfo.Effect = \
+		colorInfo.Note;
 	}
 	else {
-		colorInfo.Instrument = pSettings->Appearance.iColPatternInstrument;
-		colorInfo.Volume = pSettings->Appearance.iColPatternVolume;
-		colorInfo.Effect = pSettings->Appearance.iColPatternEffect;
+		colorInfo.Instrument 	= pSettings->Appearance.iColPatternInstrument;
+		colorInfo.Volume 		= pSettings->Appearance.iColPatternVolume;
+		colorInfo.Volume2Fade 	= pSettings->Appearance.iColPatternVolume2;
+		colorInfo.Effect 		= pSettings->Appearance.iColPatternEffect;
 	}
 
 	if (bPreview) {
-		colorInfo.Shaded	 = BLEND(colorInfo.Shaded, colorInfo.Back, SHADE_LEVEL.PREVIEW);
-		colorInfo.Note		 = BLEND(colorInfo.Note, colorInfo.Back, SHADE_LEVEL.PREVIEW);
-		colorInfo.Instrument = BLEND(colorInfo.Instrument, colorInfo.Back, SHADE_LEVEL.PREVIEW);
-		colorInfo.Volume	 = BLEND(colorInfo.Volume, colorInfo.Back, SHADE_LEVEL.PREVIEW);
-		colorInfo.Effect	 = BLEND(colorInfo.Effect, colorInfo.Back, SHADE_LEVEL.PREVIEW);
-		colorInfo.Compact	 = BLEND(colorInfo.Compact, colorInfo.Back, SHADE_LEVEL.PREVIEW);		// // //
+		colorInfo.Shaded	 = BLEND(colorInfo.Shaded, 		colorInfo.Back, SHADE_LEVEL.PREVIEW);
+		colorInfo.Note		 = BLEND(colorInfo.Note, 		colorInfo.Back, SHADE_LEVEL.PREVIEW);
+		colorInfo.Instrument = BLEND(colorInfo.Instrument, 	colorInfo.Back, SHADE_LEVEL.PREVIEW);
+		colorInfo.Volume	 = BLEND(colorInfo.Volume, 		colorInfo.Back, SHADE_LEVEL.PREVIEW);
+		colorInfo.Volume2Fade= BLEND(colorInfo.Volume2Fade, colorInfo.Back, SHADE_LEVEL.PREVIEW);
+		colorInfo.Effect	 = BLEND(colorInfo.Effect, 		colorInfo.Back, SHADE_LEVEL.PREVIEW);
+		colorInfo.Compact	 = BLEND(colorInfo.Compact, 	colorInfo.Back, SHADE_LEVEL.PREVIEW);		// // //
 	}
 
 	// Draw channels
@@ -1580,10 +1586,22 @@ void CPatternEditor::DrawCell(CDC *pDC, int PosX, cursor_column_t Column, int Ch
 			break;
 		case C_VOLUME: 
 			// Volume
-			if (pNoteData->Vol == MAX_VOLUME || pTrackerChannel->GetID() == CHANID_DPCM)
+			if (pNoteData->Vol == MAX_VOLUME || pTrackerChannel->GetID() == CHANID_DPCM) {
 				BAR(PosX);
-			else 
-				DrawChar(pDC, PosX + m_iCharWidth / 2, PosY, HEX[pNoteData->Vol & 0x0F], pColorInfo->Volume);		// // //
+			} else {
+				// prepare fading color for volume
+				int iTmpblendLevel;
+				COLORREF tmpVolColToFade;
+				iTmpblendLevel = (int)((double)(pNoteData->Vol & 0x0F) / 15.0 * 100.0);
+				tmpVolColToFade = \
+					BLEND(
+						pColorInfo->Volume, 
+						pColorInfo->Volume2Fade, 
+						iTmpblendLevel
+					);
+				
+				DrawChar(pDC, PosX + m_iCharWidth / 2, PosY, HEX[pNoteData->Vol & 0x0F], tmpVolColToFade);		// // //
+			}
 			break;
 		case C_EFF1_NUM: case C_EFF2_NUM: case C_EFF3_NUM: case C_EFF4_NUM:
 			// Effect type

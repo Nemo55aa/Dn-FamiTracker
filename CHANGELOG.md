@@ -30,6 +30,7 @@ Last updated: 2026-06-03
 	- MMC5 also now has proper nonlinear mixing.
 - Port VRC6 to new CSoundChip and NSFPlay emulation core (@Gumball2415 @eulyderg #325 #417)
 	- VRC6 sawtooth volume meter reads the register value rather than the actual output, the only practical difference being that the meter now displays volume level 1 correctly.
+- Add Volume column color fading feature (@eulyderg #284 @Nemo55aa #xxx)
 
 ### Bug fixes
 

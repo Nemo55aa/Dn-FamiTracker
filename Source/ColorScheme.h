@@ -63,6 +63,7 @@ struct COLOR_SCHEME {
 	const COLORREF	TEXT_HILITE2;
 	const COLORREF	TEXT_INSTRUMENT;
 	const COLORREF	TEXT_VOLUME;
+	const COLORREF	TEXT_VOLUME2;
 	const COLORREF	TEXT_EFFECT;
 	const COLORREF	SELECTION;
 	const COLORREF	CURSOR;
@@ -90,6 +91,7 @@ const COLOR_SCHEME DEFAULT_COLOR_SCHEME = {
 	0x0060FFFF,			// Highlighted text color 2
 	0x0080FF80,			// Instrument color
 	0x00FF8080,			// Volume color
+	0x00AA3030,			// Volume color to fade
 	0x008080FF,			// Effect color
 	0x00F27D86,			// Selection color
 	0x00808080,			// Cursor color
@@ -116,6 +118,7 @@ const COLOR_SCHEME MONOCHROME_COLOR_SCHEME = {
 	0x00FFFFFF,			// Highlighted text color 2
 	0x0080FF80,			// Instrument color
 	0x00FF8080,			// Volume color
+	0x00AA3030,			// Volume color to fade
 	0x008080FF,			// Effect color
 	0x00454550,			// Selection color
 	0x00908080,			// Cursor color
@@ -142,6 +145,7 @@ const COLOR_SCHEME RENOISE_COLOR_SCHEME = {
 	0x00FFF6C9,			// Highlighted text color 2
 	0x0080FF80,			// Instrument color
 	0x00FF8080,			// Volume color
+	0x00CC5050,			// Volume color to fade
 	0x008080FF,			// Effect color
 	0x00FF8080,			// Selection color
 	0x00707070,			// Cursor color
@@ -168,6 +172,7 @@ const COLOR_SCHEME WHITE_COLOR_SCHEME = {
 	0x00FF2020,			// Highlighted text color 2
 	0x00000000,			// Instrument color
 	0x00000000,			// Volume color
+	0x00AAAAAA,			// Volume color to fade
 	0x00000000,			// Effect color
 	0x00FF8080,			// Selection color
 	0x00D0A0A0,			// Cursor color
@@ -194,6 +199,7 @@ const COLOR_SCHEME SATURDAY_COLOR_SCHEME = {
 	0x00E0FFFF,			// Highlighted text color 2
 	0x00F088C0,			// Instrument color
 	0x00F0C0D8,			// Volume color
+	0x00AA3030,			// Volume color to fade
 	0x00F088C0,			// Effect color
 	0x00602040,			// Selection color
 	0x00508090,			// Cursor color
