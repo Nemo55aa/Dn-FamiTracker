@@ -6,15 +6,15 @@ Written by D.P.C.M.
 
 Version 0.5.3.9
 
-Last updated: 2026-05-31
+Last updated: 2026-06-03
 
 ---
 
-## Unreleased - 2026-05-31
+## Unreleased - 2026-06-03
 
 ### Breaking changes
 
-- ...
+- S5B Envelope frequency 0 halt has been fixed (@eulyderg #417)
 
 ### Important changes
 
