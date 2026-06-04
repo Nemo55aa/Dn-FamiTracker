@@ -1359,6 +1359,7 @@ void CPatternEditor::DrawCell(CDC *pDC, int PosX, cursor_column_t Column, int Ch
 	static const char HEX[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
 	const bool m_bDisplayFlat = theApp.GetSettings()->Appearance.bDisplayFlats;		// // //
+	const bool m_bFadeVolumeColor = theApp.GetSettings()->Appearance.bFadeVolumeColor;
 
 	const char *NOTES_A = m_bDisplayFlat ? NOTES_A_FLAT : NOTES_A_SHARP;
 	const char *NOTES_B = m_bDisplayFlat ? NOTES_B_FLAT : NOTES_B_SHARP;
@@ -1592,13 +1593,17 @@ void CPatternEditor::DrawCell(CDC *pDC, int PosX, cursor_column_t Column, int Ch
 				// prepare fading color for volume
 				int iTmpblendLevel;
 				COLORREF tmpVolColToFade;
-				iTmpblendLevel = (int)((double)(pNoteData->Vol & 0x0F) / 15.0 * 100.0);
-				tmpVolColToFade = \
-					BLEND(
-						pColorInfo->Volume, 
-						pColorInfo->Volume2Fade, 
-						iTmpblendLevel
-					);
+				if(m_bFadeVolumeColor) {
+					iTmpblendLevel = (int)((double)(pNoteData->Vol & 0x0F) / 15.0 * 100.0);
+					tmpVolColToFade = \
+						BLEND(
+							pColorInfo->Volume, 
+							pColorInfo->Volume2Fade, 
+							iTmpblendLevel
+						);
+				} else {
+					tmpVolColToFade = pColorInfo->Volume;
+				}
 				
 				DrawChar(pDC, PosX + m_iCharWidth / 2, PosY, HEX[pNoteData->Vol & 0x0F], tmpVolColToFade);		// // //
 			}

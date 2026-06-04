@@ -132,6 +132,8 @@ BEGIN_MESSAGE_MAP(CConfigAppearance, CPropertyPage)
 
 	ON_BN_CLICKED(IDC_DISPLAYFLATS, OnBnClickedDisplayFlats)
 
+	ON_BN_CLICKED(IDC_FADEVOLCOL, 	OnBnClickedFadeVolCol)
+
 	ON_CBN_SELCHANGE(IDC_FONT, 			OnCbnSelchangeFont)
 	ON_CBN_SELCHANGE(IDC_FONT_SIZE, 	OnCbnSelchangeFontSize)
 	ON_CBN_EDITCHANGE(IDC_FONT_SIZE, 	OnCbnEditchangeFontSize)
@@ -362,13 +364,16 @@ void CConfigAppearance::OnPaint()
 				CString tmpVolStr;
 				int iTmpblendLevel = 0xE - i * 2;
 				COLORREF tmpVolColBlended;
-
-				tmpVolColBlended = \
-					BLEND(
-						GetColor(COL_PATTERN_VOLUME), 
-						GetColor(COL_PATTERN_VOLUME2),
-						(int)(((double)iTmpblendLevel / 15.0) * 100.0)
-					);
+				if(m_bFadeVolCol) {
+					tmpVolColBlended = \
+						BLEND(
+							GetColor(COL_PATTERN_VOLUME), 
+							GetColor(COL_PATTERN_VOLUME2),
+							(int)(((double)iTmpblendLevel / 15.0) * 100.0)
+						);	
+				} else {
+					tmpVolColBlended = GetColor(COL_PATTERN_VOLUME);
+				}
 				dc.SetTextColor(tmpVolColBlended);
 
 				tmpVolStr.Format("%X", 0xE - i * 2);
@@ -458,8 +463,8 @@ BOOL CConfigAppearance::OnInitDialog()
 
 	m_bPatternColors = pSettings->Appearance.bPatternColor;		// // //
 	m_bDisplayFlats = pSettings->Appearance.bDisplayFlats;		// // //
+	m_bFadeVolCol	= pSettings->Appearance.bFadeVolumeColor;
 
-	
 	// Load color schemes
 	pItemsBox = static_cast<CComboBox*>(GetDlgItem(IDC_SCHEME));
 
@@ -526,6 +531,7 @@ BOOL CConfigAppearance::OnApply()
 	
 	pSettings->Appearance.bPatternColor = m_bPatternColors;		// // //
 	pSettings->Appearance.bDisplayFlats = m_bDisplayFlats;		// // //
+	pSettings->Appearance.bFadeVolumeColor = m_bFadeVolCol;
 
 	pSettings->Appearance.iColBackground			= m_iColors[COL_BACKGROUND];
 	pSettings->Appearance.iColBackgroundHilite		= m_iColors[COL_BACKGROUND_HILITE];
@@ -572,6 +578,7 @@ BOOL CConfigAppearance::OnSetActive()
 {
 	CheckDlgButton(IDC_PATTERNCOLORS, m_bPatternColors);
 	CheckDlgButton(IDC_DISPLAYFLATS, m_bDisplayFlats);
+	CheckDlgButton(IDC_FADEVOLCOL, 	m_bFadeVolCol);
 	return CPropertyPage::OnSetActive();
 }
 
@@ -739,6 +746,13 @@ void CConfigAppearance::OnBnClickedDisplayFlats()
 	SetModified();
 }
 
+void CConfigAppearance::OnBnClickedFadeVolCol()
+{
+	m_bFadeVolCol	= IsDlgButtonChecked(IDC_FADEVOLCOL) != 0;
+	RedrawWindow();
+	SetModified();
+}
+
 const auto TXT = _T(".txt");
 void CConfigAppearance::OnBnClickedButtonAppearanceSave()		// // // 050B
 {
@@ -773,6 +787,7 @@ void CConfigAppearance::ExportSettings(const char *Path) const		// // // 050B
 			file << COLOR_ITEMS[i] << SETTING_SEPARATOR << HEX_PREFIX << conv::from_uint_hex(m_iColors[i], 6) << std::endl;
 		file << "Pattern colors" << SETTING_SEPARATOR << m_bPatternColors << std::endl;
 		file << "Flags" << SETTING_SEPARATOR << m_bDisplayFlats << std::endl;
+		file << "Fade volume color" << SETTING_SEPARATOR << m_bFadeVolCol << std::endl;
 		file << "Font" << SETTING_SEPARATOR << m_strFont << std::endl;
 		file << "Font size" << SETTING_SEPARATOR << m_rowHeight << std::endl;
 		file << "Font percent" << SETTING_SEPARATOR << this->fontPercent << std::endl;
@@ -851,6 +866,9 @@ void CConfigAppearance::ImportSettings(const char *Path)		// // // 050B
 		} else if (is_match(key, "Flags")) {
 			if (auto x = conv::to_uint(value))
 				m_bDisplayFlats = (bool)*x;
+		} else if (is_match(key, "Fade volume color")) {
+			if (auto x = conv::to_uint(value))
+				m_bFadeVolCol = (bool)*x;
 		} else if (is_match(key, "Font size")) {
 			if (auto x = conv::to_uint(value))
 				m_rowHeight = *x;

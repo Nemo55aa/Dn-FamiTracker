@@ -198,6 +198,8 @@ void CSettings::SetupSettings()
 		->UpdateDefault("Appearance", "Pattern colors");
 	SETTING_BOOL("Appearance", "Display flats", false, &Appearance.bDisplayFlats)
 		->UpdateDefault("Appearance", "Display flats");
+	SETTING_BOOL("Appearance", "Fade volume color", false, &Appearance.bFadeVolumeColor)
+		->UpdateDefault("Appearance", "Fade volume color");
 
 	SETTING_STRING("Appearance", "Header font", HEADER_FONT, &Appearance.strFontHeader)
 		->UpdateDefault("General", "Header font");

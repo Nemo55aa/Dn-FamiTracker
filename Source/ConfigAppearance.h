@@ -95,6 +95,7 @@ protected:
 	int			m_iSelectedItem;
 	bool		m_bPatternColors;
 	bool		m_bDisplayFlats;
+	bool		m_bFadeVolCol;
 
 	int			m_iColors[COLOR_ITEM_COUNT];
 
@@ -111,6 +112,7 @@ public:
 	afx_msg void OnCbnSelchangeFontSize();
 	afx_msg void OnBnClickedPatterncolors();
 	afx_msg void OnBnClickedDisplayFlats();
+	afx_msg void OnBnClickedFadeVolCol();
 	afx_msg void OnCbnEditchangeFontSize();
 	
 	afx_msg void OnCbnSelchangeFontHeader();

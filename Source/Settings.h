@@ -216,6 +216,7 @@ public:
 
 		bool	bPatternColor;
 		bool	bDisplayFlats;
+		bool 	bFadeVolumeColor;
 	} Appearance;
 
 	struct {
