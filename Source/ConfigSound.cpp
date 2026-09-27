@@ -97,8 +97,18 @@ BOOL CConfigSound::OnInitDialog()
 	CSoundInterface *pSoundInterface = theApp.GetSoundGenerator()->GetSoundInterface();
 	const int iCount = pSoundInterface->GetDeviceCount();
 
-	for (int i = 0; i < iCount; ++i)
-		pDevices->AddString(pSoundInterface->GetDeviceName(i).c_str());
+#if 1 
+	// Currently using MBCS. "CW2A" (Wide-to-ANSI) will be unneeded 
+	// if we switch to Unicode in the future.
+	for (int i = 0; i < iCount; ++i) {
+		CStringA CStrTmpDevName = 
+			CW2A(
+				CA2W(pSoundInterface->GetDeviceName(i).c_str(), CP_UTF8),
+				CP_ACP
+			);
+		pDevices->AddString(CStrTmpDevName);
+	}
+#endif
 
 	pDevices->SetCurSel(pSettings->Sound.iDevice);
 
