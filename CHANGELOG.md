@@ -40,6 +40,7 @@ Last updated: 2026-09-27
 
 - Miscellaneous code documentation and minor cleanup (@eulyderg #417)
 - CSoundChip now reports the channel count and initial channel of the chip (@eulyderg #417)
+- Sync CMake source list with the VS project after #417, and add `/utf-8` and `/MP` for MSVC (@Nemo55aa #xx)
 
 
 
