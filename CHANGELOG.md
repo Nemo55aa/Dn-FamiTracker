@@ -6,11 +6,11 @@ Written by D.P.C.M.
 
 Version 0.5.3.9
 
-Last updated: 2026-06-03
+Last updated: 2026-09-27
 
 ---
 
-## Unreleased - 2026-06-03
+## Unreleased - 2026-09-27
 
 ### Breaking changes
 
@@ -34,6 +34,7 @@ Last updated: 2026-06-03
 ### Bug fixes
 
 - Replace the old CSoundChip, CChannel, and 2A03Chan classes (@Gumball2415 @eulyderg #29 #417)
+- added conversion for combobox uses shift jis (or other ) (@Leafeon2020 @Nemo55aa #425 #xx)
 
 ### Internal
 
